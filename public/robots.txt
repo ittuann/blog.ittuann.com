@@ -2,4 +2,4 @@ User-agent: *
 Content-Signal: ai-train=yes, search=yes, ai-input=yes
 Allow: /
 
-Sitemap: https://blog.ittuann.com/sitemap.xml
+Sitemap: https://blog.ittuann.com/sitemap-index.xml
