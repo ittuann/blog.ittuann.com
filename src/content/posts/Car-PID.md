@@ -1,0 +1,283 @@
+---
+title: 智能车常规 PID 以及改进式 PID
+description: PID 控制：连续型 PID，增量式 PID，位置式 PID，不完全微分 PID，微分先行 PID，以及积分死区，三段式积分分离，变速积分，有效偏差法，抗积分饱和，遇限削弱积分，梯形积分
+pubDate: 2021-08-29
+tags: ["智能车", "PID"]
+category: ["Tech"]
+heroImage: "../../assets/Car-PID.webp"
+---
+
+# 经典 PID 控制：
+
+- 比例、积分、微分控制，简称 PID 控制，又称 PID 调节。PID 控制的基本方法是根据系统输入与预定输出的偏差的大小运用比例、积分、微分计算出一个控制量，将这个控制量输入系统，获得输出量，通过反馈回路再次检测该输出量的偏差，循环上述过程，以使输出达到预定值。PID 控制器问世至今已有近 70 年历史，其有着结构简单、稳定性好、工作可靠、调整方便等优点。
+
+  当被控对象的结构和参数不能完全掌握，或得不到精确的数学模型时，控制理论的其它技术难以采用时，系统控制器的结构和参数必须依靠经验和现场调试来确定，这时应用 PID 控制技术最为方便。即当我们不完全了解一个系统和被控对象，或不能通过有效的测量手段来获得系统参数时，也适合用 PID 控制技术。
+
+![CarPID1](../../assets/Car-PID.webp)
+
+## 连续型 PID：
+
+$$
+u\left(t\right)=K_p\left[e\left(t\right)+\frac{1}{T_i}\int_{0}^{t}e\left(t\right)dt+T_d\frac{de\left(t\right)}{dt}\right]
+$$
+
+即对*err(t)*分别进行比例，积分，微分运算之后进行加权求和得到输出*U(t)*。
+
+## 离散型 PID：
+
+由于单片机控制是采样控制，只能根据采样时刻的偏差控制输出量而不能计算连续输出量，所以要采用离散化的 PID 算法。离散数字 PID 分为位置式和增量式两种。
+
+$$
+\begin{aligned} \boldsymbol{u}(\boldsymbol{k}) &=\boldsymbol{K}_{\boldsymbol{p}}\left\{\boldsymbol{e}(\boldsymbol{k})+\frac{\boldsymbol{T}}{\boldsymbol{T}_{\boldsymbol{i}}} \sum_{j=1}^{k} \boldsymbol{e}(\boldsymbol{j})+\frac{\boldsymbol{T}_{d}}{\boldsymbol{T}}[\boldsymbol{e}(\boldsymbol{k})-\boldsymbol{e}(\boldsymbol{k}-1)]\right\} \\ &=\boldsymbol{K}_{p} \boldsymbol{e}(\boldsymbol{k})+\boldsymbol{K}_{i} \sum_{j=1}^{k} \boldsymbol{e}(\boldsymbol{j})+\boldsymbol{K}_{d}[\boldsymbol{e}(\boldsymbol{k})-\boldsymbol{e}(\boldsymbol{k}-1)] \end{aligned}
+$$
+
+而增量式 PID 算法对应可由位置式推出：
+
+$$
+\begin{aligned} &\boldsymbol{u}(\boldsymbol{k})=\boldsymbol{K}_{p} \boldsymbol{e}(\boldsymbol{k})+\boldsymbol{K}_{i} \sum_{j=1}^{k} \boldsymbol{e}(\boldsymbol{j})+\boldsymbol{K}_{d}[\boldsymbol{e}(\boldsymbol{k})-\boldsymbol{e}(\boldsymbol{k}-1)] \\ &\boldsymbol{u}(\boldsymbol{k}-1)=\boldsymbol{K}_{p} \boldsymbol{e}(\boldsymbol{k}-1)+\boldsymbol{K}_{i} \sum_{j=1}^{k-1} \boldsymbol{e}(\boldsymbol{j})+\boldsymbol{K}_{d}[\boldsymbol{e}(\boldsymbol{k}-1)-\boldsymbol{e}(\boldsymbol{k}-2)] \end{aligned}
+$$
+
+$$
+\Delta u\left(k\right)=u\left(k\right)-u\left(k-1\right)=K_p\left[e\left(k\right)-e\left(k-1\right)\right]+K_ie\left(k\right)+K_d\left[e\left(k\right)-2e\left(k-1\right)+e\left(k-2\right)\right]
+$$
+
+具体的代码实现为：
+
+```c
+float RealizePID(PIDTypeDef_t *pid, float get, float set) {
+    pid->nowVal = get;
+    pid->exVal = set;
+    pid->errNow = pid->exVal - pid->nowVal;
+
+    pid->outPutP = pid->Kp * pid->errNow;
+    pid->outPutI += pid->Ki * pid->errNow;
+    pid->outPutD = pid->Kd * (pid->errNow - pid->errLast);
+    pid->outPut = pid->outPutP + pid->outPutI + pid->outPutD;
+
+    pid->errLast = pid->errNow;
+
+    return pid->outPut;
+}
+
+float IncrementalPID(PIDTypeDef_t *pid, float get, float set) {
+    pid->nowVal = get;
+    pid->exVal = set;
+    pid->errNow = pid->exVal - pid->nowVal;
+
+    pid->outPutP = pid->Kp * (pid->errNow - pid->errLast);
+    pid->outPutI = pid->Ki * pid->errNow;
+    pid->outPutD = pid->Kd * (pid->errNow - 2.000f * pid->errLast + pid->errLastLast);
+    pid->outPut += pid->outPutP + pid->outPutI + pid->outPutD;
+
+    pid->errLast = pid->errNow;
+    pid->errLastLast = pid->errLast;
+
+    return pid->outPut;
+}
+```
+
+- 公式中没有体现周期 T，其实考虑到周期是一个常数，就直接合在了系数中。采样周期和控制周期都会影响系数。
+
+- 在 PID 算法中，比例环节 P 的作用是成比例地反映控制系统的偏差信号 e(t)，一旦产生偏差，比例控制环节立即产生控制作用以减小偏差；积分环节 I 的作用是消除静差，提高系统的无差度。微分环节 D 的作用是反映偏差信号的变化趋势，能够在偏差信号变化之前先引入一个有效的早期修正信号来提前修正偏差，加快系统的动作速度，减少调节时间。
+
+- 所谓增量式 PID 是指数字控制器的输出只是控制量的增量△u(k)。增量式 PID 优点在于，由于输出的是增量所以误动作时影响小，必要时可用逻辑判断的方法关掉。另外由于控制增量△u(k) 的确定仅与最近 k 次的采样值有关，所以较容易通过加权处理而获得比较好的控制效果。
+
+- 在 PID 参数的选择上，常见的是过程控制系统（如电机控制）因较慢的响应常采用 PI 控制，突出积分项的作用，而随动控制系统（如舵机控制）为了达到较快的响应常采用 PD 控制。
+
+  大多智能车队会推荐速度环使用增量式 PID，方向环使用位置式 PID，这是由于增量 PID 由于也不容易造成电机的正反转切换。但其实在合适的参数下，增量式 PID 与位置式 PID 应该是可以等价。
+
+# 改进式 PID：
+
+## 不完全微分 PID：
+
+微分信号的引入可改善系统的动态特性，但也易引进高频干扰，在误差扰动突变时尤其明显。因而使用微分项常常采用串接一个一阶惯性环节（一阶低通滤波器）的方式，以克服高频干扰，抗微分扰动。
+
+### 微分项不完全微分 PID：
+
+将一低通滤波环节串接在微分项的输出之后
+
+```c
+pid->outputD = pid->Kd * (pid->errNow- pid->errLast) * lpf1Factor_d + pid->OutputDD * (1.000f - lpf1Factor_d);
+```
+
+### 输出不完全微分 PID：
+
+将一低通滤波环节串接在 PID 控制器的输出后
+
+```c
+pid->outPut = pid->outPut * lpf1Factor_out  + pid->outPutLast * (1.000f - lpf1Factor_out);
+```
+
+## 微分先行 PID：
+
+### 输出微分先行 PID：
+
+将低通滤波串联在反馈环节（如编码器环节）
+
+```c
+pid->nowVal = get * lpf1Factor_val + pid->lastVal * (1.000f - lpf1Factor_val);
+```
+
+### 偏差微分先行 PID：
+
+将低通滤波串联在偏差环节
+
+```c
+pid->errNow = (pid->exVal - pid->nowVal) * lpf1Factor_err + pid->errLast * (1.000f - lpf1Factor_err);
+```
+
+## 变积分 PID：
+
+### 死区：
+
+死区即实际工程中可容忍的最大误差。实际应用中，小误差产生的原因很大可能是由于测量误差或其它不可避免因素造成而不是实际误差。在较小的偏差下弱调节或不调节，可以让控制避免抖动更加平滑。
+
+### 积分分离：
+
+在普通 PID 控制中引入积分环节主要是为了消除净差和提高控制精度。但在控制系统启动或停车或大幅度增减目标值时，由于积分饱和作用，短时间内会造成系统有特别大的偏差，会造成 PID 运算的积分积累，致使输出量特别大，很容易导致超调，甚至会引起系统较大的震荡。
+
+当误差绝对值大于阈值时取消积分项避免过量超调，在大误差范围内减小积分项作用。当被控量接近目标值时（即误差正常时），引入积分控制，以消除净差，提高控制精度。
+
+```c
+if (pid->errABS < I_Band) {
+    pid->outPutI = pid->ki * pid->errSum;
+} else {
+    pid->outPutI = 0.000f;
+}
+```
+
+积分分离也会导致启动时或是状态变化时 PID 上升时间边长，若要运用则应多次实验并谨慎来选择范围和系数。若阈值太大，达不到积分分离的目的，若太小又有可能因被控量无法跳出积分分离区，只进行 PD 控制，将会出现残差。
+
+### 三段式积分分离：
+
+在积分分离的基础上设置两个阈值划分为三段。阈值的设定依实际情况而定。
+
+```c
+if (pid->errABS > 50) {
+    kiIndex = 0.000f;
+} else if(pid->errABS > 30 && pid->errABS < 50) {
+    kiIndex = 0.600f;
+} else {
+    kiIndex = 1.000f;
+}
+
+pid->outPut = pid->outPutP + pid->outPutI * kiIndex + pid->outPutD;
+```
+
+### 变速积分：
+
+积分分离每一段的 ki_index 值都为常数，而变速积分则采用系数的形式，使得积分的分段更加线性化。
+
+```c
+if (pid->errABS > lErr) {
+    kiIndex = 0.000f;
+} else if (pid->errABS < sErr) {
+    kiIndex = 1.000f;
+} else {
+    kiIndex = (lErr - pid->errABS) / (lErr - sErr);
+}
+```
+
+变速积分控制更为缓慢，实际应用体验还是积分分离效果更好。
+
+### 有效偏差法：
+
+当根据 PID 位置算法算出的控制量超出限制范围时，控制量实际上只能取边际值 U=Umax，或 U=Umin，有效偏差法是将相应的这一控制量的偏差值作为有效偏差值计入积分累计而不是将实际的偏差计入积分累计。
+
+### 遇限削弱积分（抗积分饱和）：
+
+在计算 U(k) 时，若上一时刻的控制输出量 U(k-1) 超过限制范围，则根据偏差的符号决定是否将相应偏差计入积分项。
+
+```c
+if (ABS(pid->outPutLast) > outPutLimit) {
+    if ((pid->errSum > 0 && pid->errNow < 0) || (pid->errSum < 0 && pid->errNow > 0)) {
+        pid->errSum += pid->errNow;
+    }
+} else {
+    pid->errSum += pid->errNow;
+}
+```
+
+### 梯形积分：
+
+从微积分的基本原理看，积分的实现是在无限细分的情况下进行的矩形加和计算。但是在离散状态下，时间间隔已经足够大，矩形积分在某些时候显得精度要低了一些，于是梯形积分被提出来以提升积分精度，即在积分项中将矩形积分改为梯形积分可以提高运算精度。
+
+```c
+//位置式 PID
+pid->outPutI += pid->Ki * (pid->errNow + pid->errLast) / 2.0f;
+//增量式 PID
+pid->outPutI = pid->Ki * (pid->errNow + pid->errLast) / 2.0f;
+```
+
+但是我们在实际运用时效果并未见多大提升，最终也没有运用这种处理。
+
+## 其他：
+
+- BangBang：
+
+  也称为邦邦控制，开关控制或者最小时间控制。基本原理是将状态空间划分为多个区域，一个区域对应一种控制变量的输出。，其主要的控制目的是在控制域内使系统以最快的速度从一个状态到另一个状态。控制基本公式为 $u= \begin{cases}U_{\max } & e>\varepsilon \\ U_{set} & -\varepsilon<e<\varepsilon \\ -U_{\max } & e<-\varepsilon\end{cases}$
+
+  单一的 BangBang 控制往往不多使用，若使用则常与 PID 算法进行串联，即偏差不大时，采用 PID 的输出结果，当偏差大到一定程度后，输出较高（或较低）结果。
+
+- 实际工程中，如切换 PID 模式，则建议消除积分项以避免积分饱和。
+
+- 最好做积分项，以及输出的限幅。
+
+```c
+#include <math.h>
+
+static float floatLimitMinMax(float val, float min, float max) {
+	  return fminf(fmaxf(val, min), max);
+}
+
+pid->Output = floatLimitMinMax(pid->Output, -pid->out_Max, pid->out_Max);
+```
+
+## 专家 PID：
+
+专家 PID 依赖经验与规则的制定，同样也依赖调参。专家 PID 使用时多用于电机环。
+
+```c
+if (pid->errABS < sErr) {
+    // 小偏差 较小误差，调小比例
+    pid->outPut = offineK * pid->outPut;
+} else if (pid->errABS > lErr) {
+    // 大偏差
+    // 串联 BangBang-PID
+    pid->outPut = (pid->errNow > 0) ? (9500) : (-9500);
+} else {
+    // 正常偏差
+    if ((pid->errNow * (pid->errNow - pid->errLast) > 0 && pid->errLast * (pid->errLast - pid->errLastLast) > 0) || (pid->errNow - pid->errLast) == 0) {
+        // 偏差在朝向偏差绝对值增大的方向变化 (偏差越来越大), 或者偏差一直为某一固定值
+        if (pid->errABS > midErr) {
+            // 控制器实施较强的控制作用
+            pid->outPut = onlineK * pid->outPut;
+        } else {
+            // 但是偏差绝对值本身并不是很大
+            pid->outPut = pid->outPut + 0;
+        }
+    } else if ((pid->errNow * (pid->errNow - pid->errLast) < 0 && (pid->errNow - pid->errLast) * (pid->errLast - pid->errLastLast) > 0) || (pid->errNow == 0 && pid->errLast == 0)) {
+        // 偏差的绝对值向减小的方向变化，或者已经达到平衡状态
+        // 此时可以保持控制器输出不变
+    } else if (pid->errNow * (pid->errNow - pid->errLast) < 0 && ((pid->errNow - pid->errLast) * (pid->errLast - pid->errLastLast) < 0)) {
+        // 偏差处于极值极限状态
+        if (pid->errABS > midErr) {
+            pid->outPut = onlineK * pid->outPut;
+        } else {
+            // 但是偏差绝对值本身并不是很大
+            pid->outPut = pid->outPut + 0;
+        }
+    } else {
+        // 正常情况
+        pid->outPut = pid->outPut + 0;
+    }
+}
+```
+
+这是一套较为完整的专家 PID，根据实际使用时的情况可以随意删减规则，如为了实际应用时减小静差则不使用小偏差弱调节，为了更为稳定不串联 BangBang-PID 等，较为依赖经验。
+
+# 串级 PID
+
+举一个 APM 无人机开源飞控中的[高度控制框图](https://diydrones.com/profiles/blogs/arducopter-2-9-pid-loops-for-stabilize-acro-and-alt-hold)的例子
+
+![CarPID2](https://st11.ning.com/topology/rest/1.0/file/get/3689498721?profile=original)

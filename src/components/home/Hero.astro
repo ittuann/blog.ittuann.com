@@ -1,0 +1,66 @@
+---
+import Magnet from "@/components/ui/Magnet.tsx";
+import { DiaTextReveal } from "@/components/ui/dia-text-reveal.tsx";
+import { Highlighter } from "@/components/ui/highlighter.tsx";
+import { BlurFade } from "@/components/ui/blur-fade.tsx";
+import CurvedLoop from "@/components/ui/CurvedLoop.tsx";
+import AvatarCard from "./AvatarCard.tsx";
+---
+
+<section
+  class="mx-auto flex max-w-280 flex-col items-center gap-10 px-6 py-10 md:flex-row md:py-20"
+>
+  {/* Introduction */}
+  <div class="space-y-4 md:w-1/2">
+    <DiaTextReveal
+      client:load
+      className="text-foreground text-4xl font-bold tracking-tight md:text-5xl"
+      text="60% of me is here."
+      colors={["#A97CF8", "#F38CB8", "#FDCC92"]}
+    />
+    <BlurFade client:load inView delay={0.1}>
+      <p class="text-muted-foreground max-w-xl pt-4 text-lg leading-relaxed">
+        Welcome to my
+        <Highlighter
+          client:load
+          action="underline"
+          color="#FF9800"
+          animationDuration={1000}
+        >
+          digital garden
+        </Highlighter>
+        <br />
+        I write code during the day and write about life at night
+        <br />
+        Grab a coffee, stay a while
+      </p>
+    </BlurFade>
+    <BlurFade client:idle inView delay={0.2}>
+      <Magnet client:idle padding={100} disabled={false} magnetStrength={2}>
+        <div class="pt-6">
+          <a
+            href="/about"
+            class="bg-secondary/90 text-primary hover:bg-primary/50 inline-flex h-11 items-center justify-center rounded-md px-6 text-sm font-semibold transition-colors"
+          >
+            More about me
+          </a>
+        </div>
+      </Magnet>
+    </BlurFade>
+  </div>
+
+  {/* Avatar */}
+  <AvatarCard client:idle className="w-full md:w-1/2" />
+</section>
+
+<div class="-mt-5 w-full overflow-hidden">
+  <CurvedLoop
+    client:visible
+    marqueeText="air wish digital garden ✦"
+    speed={2}
+    curveAmount={80}
+    direction="right"
+    interactive
+    className=""
+  />
+</div>

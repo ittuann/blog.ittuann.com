@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import { BlurFade } from "@/components/ui/blur-fade";
+
+const posts = await getCollection("posts");
+const topics = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+---
+
+{
+  topics.length > 0 && (
+    <section class="border-border/30 mx-auto max-w-280 border-b px-6 py-16">
+      <BlurFade client:visible inView>
+        <h3 class="text-foreground mb-2 text-[20px] font-semibold">Tags</h3>
+        <p class="text-muted-foreground mb-6 text-sm">
+          Explore the archives by tag.
+        </p>
+        <div class="flex flex-wrap gap-2">
+          {topics.map((topic) => (
+            <a
+              href={`/posts?tag=${encodeURIComponent(topic)}`}
+              class="bg-secondary text-primary hover:bg-secondary/80 rounded-full px-4 py-2 text-[14px] font-semibold tracking-widest transition-colors"
+            >
+              {topic}
+            </a>
+          ))}
+        </div>
+      </BlurFade>
+    </section>
+  )
+}

@@ -1,0 +1,48 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { BlurFade } from "@/components/ui/blur-fade";
+import PostsCard from "../PostsCard.astro";
+
+interface Props {
+  posts: CollectionEntry<"posts">[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section class="mx-auto max-w-280 px-6 py-16">
+  <div
+    class="border-border/30 mb-6 flex items-end justify-between border-b pb-4"
+  >
+    <BlurFade client:visible inView direction="right">
+      <h2 class="text-foreground text-3xl font-bold">Recent Posts</h2>
+    </BlurFade>
+    <BlurFade client:visible inView direction="left">
+      <a
+        href="/posts"
+        class="text-primary text-sm font-semibold hover:underline"
+      >
+        View all
+      </a>
+    </BlurFade>
+  </div>
+
+  <div class="grid grid-cols-1 gap-6">
+    {
+      posts.map((post, i) => (
+        <BlurFade client:visible inView delay={i * 0.1}>
+          <PostsCard
+            href={`/posts/${post.id}/`}
+            title={post.data.title}
+            description={post.data.description}
+            pubDate={post.data.pubDate}
+            tags={post.data.tags}
+            category={post.data.category}
+            imageSrc={post.data.heroImage}
+            pinned={post.data.pinned}
+          />
+        </BlurFade>
+      ))
+    }
+  </div>
+</section>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../components/layouts/Layout.astro";
+import Hero from "../components/home/Hero.astro";
+import FeaturedPosts from "../components/home/FeaturedPosts.astro";
+import RecentPosts from "../components/home/RecentPosts.astro";
+import Tags from "../components/home/Tags.astro";
+import { BackgroundMatrix } from "../components/BackgroundMatrix.tsx";
+
+const posts = (await getCollection("posts")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+const pinned = posts
+  .filter((post) => post.data.pinned != null)
+  .sort((a, b) => b.data.pinned! - a.data.pinned!);
+const featured = pinned.length ? pinned : posts.slice(0, 4); // maxPosts={4}
+const recent = posts.slice(0, 10); // maxPosts={10}
+---
+
+<Layout>
+  <main class="w-full flex-grow">
+    <BackgroundMatrix client:idle />
+
+    <Hero />
+    <FeaturedPosts posts={featured} maxPosts={4} />
+    <RecentPosts posts={recent} />
+    <Tags />
+  </main>
+</Layout>

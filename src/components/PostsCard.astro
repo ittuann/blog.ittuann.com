@@ -1,0 +1,99 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import FormattedDate from "./FormattedDate.astro";
+import { IconTags, IconSparkleHighlight } from "@tabler/icons-react";
+import { GlareHover } from "@/components/ui/glare-hover.tsx";
+
+import FallbackImage from "../assets/blog-placeholder-1.jpg";
+
+interface Props {
+  href: string;
+  title: string;
+  description: string;
+  pubDate: Date;
+  tags: string[];
+  category: string[];
+  pinned?: number;
+  imageSrc?: ImageMetadata;
+}
+
+const { href, title, description, pubDate, tags, category, imageSrc, pinned } =
+  Astro.props;
+---
+
+<GlareHover
+  client:visible
+  width="100%"
+  background="transparent"
+  className="rounded-3xl"
+>
+  <article
+    class="group bg-muted/50 hover:border-border/30 hover:bg-secondary/60 flex w-full flex-col items-center gap-6 rounded-3xl border border-transparent p-3 transition-all md:flex-row"
+  >
+    <a
+      href={href}
+      class="aspect-4/3 w-full shrink-0 overflow-hidden rounded-2xl md:w-70"
+    >
+      <Image
+        src={imageSrc ?? FallbackImage}
+        alt=""
+        width={560}
+        height={420}
+        class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+    </a>
+
+    <div class="flex w-full flex-grow flex-col">
+      <a href={href} class="block">
+        <h3
+          class="text-foreground group-hover:text-primary mb-2.5 text-lg font-semibold transition-colors"
+        >
+          {title}
+        </h3>
+        <p class="text-muted-foreground mb-4 line-clamp-2 text-lg">
+          {description}
+        </p>
+      </a>
+      <div class="mt-auto flex flex-wrap items-center gap-3">
+        {
+          category.map((cat) => (
+            <a
+              href={`/posts?category=${encodeURIComponent(cat)}`}
+              class="bg-secondary text-primary hover:bg-secondary/70 rounded-full px-2 py-0.5 text-sm font-semibold tracking-tight transition-colors"
+              onclick="event.stopPropagation()"
+            >
+              {cat}
+            </a>
+          ))
+        }
+        <span class="text-muted-foreground text-sm">
+          <FormattedDate date={pubDate} />
+        </span>
+        {
+          pinned !== undefined && (
+            <span class="text-primary">
+              <IconSparkleHighlight stroke={2} />
+            </span>
+          )
+        }
+        {
+          tags.length > 0 && (
+            <span class="text-muted-foreground flex flex-wrap gap-2 text-sm">
+              <IconTags stroke={2} />
+              {tags.map((tag) => (
+                <a
+                  href={`/posts?tag=${encodeURIComponent(tag)}`}
+                  class="hover:text-primary transition-colors"
+                  onclick="event.stopPropagation()"
+                >
+                  #{tag}
+                </a>
+              ))}
+            </span>
+          )
+        }
+      </div>
+    </div>
+  </article>
+</GlareHover>

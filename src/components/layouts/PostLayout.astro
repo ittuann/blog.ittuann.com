@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import FormattedDate from "../FormattedDate.astro";
+import Layout from "./Layout.astro";
+
+type Props = Omit<CollectionEntry<"posts">["data"], "tags" | "category"> & {
+  tags?: string[];
+  category?: string[];
+};
+
+const {
+  title,
+  description,
+  pubDate,
+  updatedDate,
+  heroImage,
+  tags = [],
+  category = [],
+} = Astro.props;
+---
+
+<Layout title={`${title} | air wish`} description={description}>
+  <main class="mx-auto w-[calc(100%-2em)] max-w-full">
+    <article>
+      {/* heroImage */}
+      <div class="w-full">
+        {
+          heroImage && (
+            <Image
+              width={1020}
+              height={510}
+              src={heroImage}
+              alt=""
+              class="mx-auto block rounded-xl shadow-lg"
+            />
+          )
+        }
+      </div>
+      {/* frontmatter */}
+      <div
+        class="prose dark:prose-invert prose-a:text-primary prose-blockquote:border-l-primary mx-auto w-180 max-w-[calc(100%-2em)] p-4"
+      >
+        <div class="mb-4 py-4 text-center leading-none">
+          {/* title */}
+          <h1 class="mb-2 text-5xl leading-tight">{title}</h1>
+          {/* description */}
+          <p class="text-muted-foreground mb-2 text-lg tracking-tight">
+            {description}
+          </p>
+          {/* category, tags */}
+          {
+            category.length > 0 && (
+              <div class="text-muted-foreground mb-2 text-sm tracking-tight">
+                {category.join(" · ")}
+              </div>
+            )
+          }
+          {
+            tags.length > 0 && (
+              <div class="mb-2 flex flex-wrap justify-center gap-2">
+                {tags.map((tag) => (
+                  <a
+                    href={`/posts?tag=${encodeURIComponent(tag)}`}
+                    class="bg-secondary text-primary hover:bg-secondary/80 rounded-full px-3 py-1 font-semibold tracking-widest no-underline transition-colors"
+                  >
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            )
+          }
+          {/* data */}
+          <div class="text-muted-foreground mb-2 italic">
+            <span>
+              Published on <FormattedDate date={pubDate} />
+            </span>
+            {
+              updatedDate && (
+                <span>
+                  , Last updated on <FormattedDate date={updatedDate} />
+                </span>
+              )
+            }
+          </div>
+          <hr class="border-border" />
+        </div>
+
+        <slot />
+      </div>
+    </article>
+  </main>
+</Layout>
