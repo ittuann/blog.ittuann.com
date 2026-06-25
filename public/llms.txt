@@ -1,0 +1,17 @@
+# air wish Blog
+
+> This is the personal blog of air wish (@ittuann).
+
+This website is completely open-source and licensed under the AGPL 3.0 license. You can view details at [GitHub/ittuann/blog.ittuann.com](https://github.com/ittuann/blog.ittuann.com)
+
+## Core Pages
+
+- [Home](https://blog.ittuann.com/): The main index page, with a list of featured posts and recent posts.
+- [About](https://blog.ittuann.com/about/): Personal introduction, contact information, and details about the blog.
+- [Posts](https://blog.ittuann.com/posts/): All blog posts, with tags for easy navigation.
+- [Featured Posts](https://blog.ittuann.com/posts/?tag=%E2%AD%90): The list of all featured posts.
+
+## Resources
+
+- [Blog Source Code (AGPL 3.0)](https://github.com/ittuann/blog.ittuann.com): The GitHub repository hosting the source code for this website.
+- [Personal Landing Page](https://ittuann.com/): The personal landing page for air wish (@ittuann).

@@ -134,7 +134,7 @@ export function FeaturedPostsInteractive({
                     <div className="w-full p-2 md:w-1/2">
                       <img
                         src={selected.heroImageSrc}
-                        alt=""
+                        alt="Featured post hero image"
                         className="h-full min-h-48 w-full rounded-2xl object-cover"
                       />
                     </div>
