@@ -35,6 +35,7 @@ import AvatarCard from "./AvatarCard.tsx";
         Grab a coffee, stay a while
       </p>
     </BlurFade>
+
     <BlurFade client:idle inView delay={0.2}>
       <Magnet client:idle padding={100} disabled={false} magnetStrength={2}>
         <div class="pt-6">
@@ -54,13 +55,15 @@ import AvatarCard from "./AvatarCard.tsx";
 </section>
 
 <div class="-mt-5 w-full overflow-hidden">
-  <CurvedLoop
-    client:visible
-    marqueeText="air wish digital garden ✦"
-    speed={2}
-    curveAmount={80}
-    direction="right"
-    interactive
-    className=""
-  />
+  <BlurFade client:load inView delay={0.25}>
+    <CurvedLoop
+      client:visible
+      marqueeText="air wish digital garden ✦"
+      speed={2}
+      curveAmount={80}
+      direction="right"
+      interactive
+      className=""
+    />
+  </BlurFade>
 </div>

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Introduction
 
-This is a modern personal static blog website based on **Astro 6** framework.
+This is a modern personal static blog website based on Astro 6 framework.
 
 ## Tech Stack
 
@@ -34,16 +34,19 @@ pnpm format       # Run Prettier formatting
 
 ## Architecture
 
-- `src/pages/` — file-based routing. `blog/[...slug].astro` handles dynamic post routes.
-- `src/components/ui/` — shadcn UI components.
+- `src/components/ui/` — shadcn/ui components.
 - `src/components/home/` — homepage sections (Hero, Featured Posts, Recent Posts).
+- `src/pages/` — file-based routing. `posts/[...slug].astro` handles dynamic post routes.
 - `src/content/posts/` — Markdown/MDX blog posts
+- `src/assets/` — images used in the blog posts.
 
 ## Styling
 
-Uses **Tailwind CSS 4**, with the `@theme` directive in `src/styles/global.css` — no `tailwind.config.*` file. Design tokens are CSS variables in `oklch` color space.
+Uses **Tailwind CSS 4**, with the `@theme` directive in `src/styles/global.css` — no `tailwind.config.*` file.
 
 Only use `shadcn/ui` CSS color variables in `global.css`. Do not add custom color palettes.
+
+Design tokens are CSS variables in `oklch` color space.
 
 Path alias `@/*` resolves to `src/*`. shadcn components are configured via `components.json` (style: radix-vega, icons: Tabler).
 
