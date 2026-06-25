@@ -9,7 +9,7 @@ const topics = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
 {
   topics.length > 0 && (
     <section class="border-border/30 mx-auto max-w-280 border-b px-6 py-16">
-      <BlurFade client:visible inView>
+      <BlurFade client:visible inView delay={0.1}>
         <h3 class="text-foreground mb-2 text-[20px] font-semibold">Tags</h3>
         <p class="text-muted-foreground mb-6 text-sm">
           Explore the archives by tag.

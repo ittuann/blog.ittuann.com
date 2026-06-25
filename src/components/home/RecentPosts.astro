@@ -30,7 +30,7 @@ const { posts } = Astro.props;
   <div class="grid grid-cols-1 gap-6">
     {
       posts.map((post, i) => (
-        <BlurFade client:visible inView delay={i * 0.05}>
+        <BlurFade client:visible inView delay={0.1}>
           <PostsCard
             href={`/posts/${post.id}/`}
             title={post.data.title}
