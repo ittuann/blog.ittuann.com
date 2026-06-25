@@ -1,6 +1,6 @@
 ---
 title: 智能车电机系统辨识和 PID 仿真自动调参
-description: 使用 Matlab 的 System Identification 系统辨识工具箱，辨识出传递函数；用 Simulink 仿真控制系统；PID Tuner 自动整定 PID 参数
+description: 使用 MATLAB 的 System Identification 系统辨识工具箱，辨识出传递函数；用 Simulink 仿真控制系统；PID Tuner 自动整定 PID 参数
 pubDate: 2021-08-29
 tags: ["智能车", "PID"]
 category: ["Tech"]
@@ -30,9 +30,9 @@ heroImage: "../../assets/Car-Simulate-1.webp"
 
 ## 导入数据
 
-### 导入数据到 Matlab
+### 导入数据到 MATLAB
 
-我使用的环境是 Matlab R2020b。
+我使用的环境是 MATLAB R2020b。
 
 （Matlab 从 R2019a 开始就有了 STM32 的硬件支持包，Simulink 可以直接生成能下载到板子中运行的代码和程序。不过这部分我还没探索完咕咕咕
 
@@ -44,7 +44,7 @@ heroImage: "../../assets/Car-Simulate-1.webp"
 
 系统辨识这边我们自然选择的是根据数据建模的方案，而非直接使用机理建模。
 
-之后在 Matlab 的 App 中选择 `System Identification`
+之后在 MATLAB 的 App 中选择 `System Identification`
 
 在左侧`import data`导入数据，导入的数据可以包括时域的也可以包括频域的，这里我们以选择`Time domain data`导入时间域数据为例。
 
@@ -76,7 +76,7 @@ heroImage: "../../assets/Car-Simulate-1.webp"
 
 （只是为了演示就只采集了一小部分数据采样频率也不高
 
-把辨识结果`tf1`拖拽到`To Workspace`即可导出到工作区，系统辨识完成。这时回到 Matlab 主窗口即可查看工作区里 tf1 的信息。
+把辨识结果`tf1`拖拽到`To Workspace`即可导出到工作区，系统辨识完成。这时回到 MATLAB 主窗口即可查看工作区里 tf1 的信息。
 
 ![Simulink3](../../assets/Car-Simulate-3.webp)
 
