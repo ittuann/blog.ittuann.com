@@ -14,4 +14,5 @@ This website is completely open-source and licensed under the AGPL 3.0 license. 
 ## Resources
 
 - [Blog Source Code (AGPL 3.0)](https://github.com/ittuann/blog.ittuann.com): The GitHub repository hosting the source code for this website.
-- [Personal Landing Page](https://ittuann.com/): The personal landing page for air wish (@ittuann).
+- [GitHub Profile](https://github.com/ittuann): GitHub profile for air wish (@ittuann).
+- [Personal Landing Page](https://ittuann.com/): The personal landing page for air wish (@ittuann), which includes links to additional personal information.

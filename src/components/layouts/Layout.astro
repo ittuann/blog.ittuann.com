@@ -16,6 +16,33 @@ const { title = "air wish Blog", description = "air wish (@ittuann) Blog" } =
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-TXMS9SV1L7"
+      is:inline
+      type="text/partytown"></script>
+    <script is:inline type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-TXMS9SV1L7");
+    </script>
+    <script is:inline type="text/partytown">
+      (function (c, l, a, r, i, t, y) {
+        c[a] =
+          c[a] ||
+          function () {
+            (c[a].q = c[a].q || []).push(arguments);
+          };
+        t = l.createElement(r);
+        t.async = 1;
+        t.src = "https://www.clarity.ms/tag/" + i;
+        y = l.getElementsByTagName(r)[0];
+        y.parentNode.insertBefore(t, y);
+      })(window, document, "clarity", "script", "xceud0crud");
+    </script>
   </head>
 
   <body class="text-autospace font-mono text-base antialiased">

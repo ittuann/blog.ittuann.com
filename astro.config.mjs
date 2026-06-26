@@ -3,8 +3,9 @@ import { defineConfig, fontProviders } from "astro/config";
 import { unified, rehypeHeadingIds } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-
+import partytown from "@astrojs/partytown";
 import react from "@astrojs/react";
+
 import tailwindcss from "@tailwindcss/vite";
 
 import remarkMath from "remark-math";
@@ -14,7 +15,12 @@ import rehypeKatex from "rehype-katex";
 export default defineConfig({
   site: "https://blog.ittuann.com",
   output: "static",
-  integrations: [mdx(), sitemap(), react()],
+  integrations: [
+    mdx(),
+    sitemap(),
+    react(),
+    partytown({ config: { forward: ["dataLayer.push"] } }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
