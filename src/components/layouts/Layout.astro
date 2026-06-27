@@ -16,12 +16,12 @@ const { title = "air wish Blog", description = "air wish (@ittuann) Blog" } =
 <html lang="en">
   <head>
     <BaseHead title={title} description={description} />
+
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-TXMS9SV1L7"
-      is:inline
-      type="text/partytown"></script>
-    <script is:inline type="text/partytown">
+      is:inline></script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
@@ -29,7 +29,7 @@ const { title = "air wish Blog", description = "air wish (@ittuann) Blog" } =
       gtag("js", new Date());
       gtag("config", "G-TXMS9SV1L7");
     </script>
-    <script is:inline type="text/partytown">
+    <script is:inline async type="text/partytown">
       (function (c, l, a, r, i, t, y) {
         c[a] =
           c[a] ||
