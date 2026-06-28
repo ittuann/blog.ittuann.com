@@ -17,10 +17,8 @@ const postData = await Promise.all(
     id: post.id,
     title: post.data.title,
     description: post.data.description,
-    pubDate: (() => {
-      const d = post.data.pubDate;
-      return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-    })(),
+    pubDate: post.data.pubDate.toISOString(),
+
     heroImageSrc: post.data.heroImage
       ? (
           await getImage({

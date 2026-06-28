@@ -9,7 +9,7 @@ interface PostData {
   tags: string[];
   category: string[];
   pinned?: number;
-  imageSrc: string;
+  heroImageSrc: string;
 }
 
 interface Props {
@@ -165,7 +165,7 @@ export default function PostsList({ posts }: Props) {
                     >
                       <div className="w-4.5rem aspect-4/3 shrink-0 overflow-hidden rounded-xl">
                         <img
-                          src={post.imageSrc}
+                          src={post.heroImageSrc}
                           alt=""
                           width={144}
                           height={108}

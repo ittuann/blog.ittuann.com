@@ -5,7 +5,7 @@ import FormattedDate from "./FormattedDate.astro";
 import { IconTags, IconSparkleHighlight } from "@tabler/icons-react";
 import { GlareHover } from "@/components/ui/glare-hover.tsx";
 
-import FallbackImage from "../assets/blog-placeholder-1.jpg";
+import { getFallbackImage } from "../utils/getFallbackImage.ts";
 
 interface Props {
   href: string;
@@ -15,10 +15,10 @@ interface Props {
   tags: string[];
   category: string[];
   pinned?: number;
-  imageSrc?: ImageMetadata;
+  heroImage?: ImageMetadata;
 }
 
-const { href, title, description, pubDate, tags, category, imageSrc, pinned } =
+const { href, title, description, pubDate, tags, category, pinned, heroImage } =
   Astro.props;
 ---
 
@@ -36,7 +36,7 @@ const { href, title, description, pubDate, tags, category, imageSrc, pinned } =
       class="aspect-4/3 w-full shrink-0 overflow-hidden rounded-2xl md:w-70"
     >
       <Image
-        src={imageSrc ?? FallbackImage}
+        src={heroImage ?? getFallbackImage(pubDate)}
         alt="Post hero image"
         width={560}
         height={420}

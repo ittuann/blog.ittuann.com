@@ -69,7 +69,7 @@ Defined in `src/content.config.ts`. Posts use a Zod schema with these frontmatte
 | `description` | yes      |                                                                |
 | `pubDate`     | yes      |                                                                |
 | `updatedDate` | no       |                                                                |
-| `tags`        | no       | `string[]`, defaults to `[]`                                   |
-| `category`    | no       | `string[]`, defaults to `[]`                                   |
-| `pinned`      | no       | number — higher = higher priority on homepage featured section |
+| `tags`        | yes      | `string[]`                                                     |
+| `category`    | yes      | `string[]`                                                     |
+| `pinned`      | no       | number — higher priority on homepage featured section         |
 | `heroImage`   | no       |                                                                |

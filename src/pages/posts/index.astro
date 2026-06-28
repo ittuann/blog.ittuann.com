@@ -4,7 +4,7 @@ import { getImage } from "astro:assets";
 import Layout from "../../components/layouts/Layout.astro";
 import PostsList from "../../components/PostsList.tsx";
 
-import FallbackImage from "../../assets/blog-placeholder-1.jpg";
+import { getFallbackImage } from "../../utils/getFallbackImage.ts";
 
 const posts = (await getCollection("posts")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
@@ -13,10 +13,11 @@ const posts = (await getCollection("posts")).sort(
 const postsData = await Promise.all(
   posts.map(async (post) => {
     const img = await getImage({
-      src: post.data.heroImage ?? FallbackImage,
+      src: post.data.heroImage ?? getFallbackImage(post.data.pubDate),
       width: 144,
       height: 108,
     });
+
     return {
       id: post.id,
       title: post.data.title,
@@ -25,7 +26,7 @@ const postsData = await Promise.all(
       tags: post.data.tags,
       category: post.data.category,
       pinned: post.data.pinned,
-      imageSrc: img.src,
+      heroImageSrc: img.src,
     };
   }),
 );
