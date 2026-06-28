@@ -51,31 +51,31 @@ IIR 滤波就是这个个方程。yn 为输出数据，xn 为输入数据，a �
 #define ORDER 2
 
 typedef struct {
-	float A[ORDER + 1];
+    float A[ORDER + 1];
     float B[ORDER + 1];
     float OriginData[ORDER + 1];
     float FilterData[ORDER + 1];
 } LpfIIR2nd_t;
 
 /**
- * @brief			二阶 IIR 低通滤波器
- * @param[out]		lpf : 滤波结构数据指针
- * @param[in]		rawData : 原始数据
+ * @brief            二阶 IIR 低通滤波器
+ * @param[out]       lpf : 滤波结构数据指针
+ * @param[in]        rawData : 原始数据
  */
 void LowPassFilterIIR2nd(LpfIIR2nd_t* lpf, float rawData)
 {
-	uint8_t i = 0;
+    uint8_t i = 0;
     // 递推旧值
-	for (i = ORDER; i > 0; i--) {
-		lpf->OriginData[i] = lpf->OriginData[i - 1];
-		lpf->FilterData[i] = lpf->FilterData[i - 1];
-	}
+    for (i = ORDER; i > 0; i--) {
+        lpf->OriginData[i] = lpf->OriginData[i - 1];
+        lpf->FilterData[i] = lpf->FilterData[i - 1];
+    }
     // 计算滤波结果
-	lpf->OriginData[0] = rawData;
-	lpf->FilterData[0] = lpf->B[0] * lpf->OriginData[0];	// NUM 分子
-	for (i = 1; i <= ORDER; i++) {
-		lpf->FilterData[0] = lpf->FilterData[0] + lpf->B[i] * lpf->OriginData[i] - lpf->A[i] * lpf->FilterData[i];
-	}
+    lpf->OriginData[0] = rawData;
+    lpf->FilterData[0] = lpf->B[0] * lpf->OriginData[0];    // NUM 分子
+    for (i = 1; i <= ORDER; i++) {
+        lpf->FilterData[0] = lpf->FilterData[0] + lpf->B[i] * lpf->OriginData[i] - lpf->A[i] * lpf->FilterData[i];
+    }
 }
 ```
 
@@ -95,25 +95,25 @@ lpf->FilterData[0] = (lpf->B[0] * lpf->OriginData[0] + lpf->B[1] * lpf->OriginDa
 
 ```c
 /**
- * @brief	二阶 IIR 低通滤波
- *			APM 和 PX4 内的计算系数方式
+ * @brief    二阶 IIR 低通滤波
+ *           APM 和 PX4 内的计算系数方式
  */
 void AccLowpassIIR2Filter_E(void)
 {
-	const float sample_freq = 500;
-	const float _cutoff_freq = 200;
+    const float sample_freq = 500;
+    const float _cutoff_freq = 200;
 
-	const float fr = sample_freq / _cutoff_freq;
-	const float ohm = tanf(M_PI_F / fr);
-	const float c = 1.0f + 2.0f * cosf(M_PI_F / 4.0f) * ohm + ohm * ohm;
+    const float fr = sample_freq / _cutoff_freq;
+    const float ohm = tanf(M_PI_F / fr);
+    const float c = 1.0f + 2.0f * cosf(M_PI_F / 4.0f) * ohm + ohm * ohm;
 
-	const float _b0 = ohm * ohm / c;
-	const float _b1 = 2.0f * _b0;
-	const float _b2 = _b0;
-	const float _a1 = 2.0f * (ohm * ohm - 1.0f) / c;
-	const float _a2 = (1.0f - 2.0f * cosf(M_PI_F / 4.0f) * ohm +ohm * ohm) / c;
+    const float _b0 = ohm * ohm / c;
+    const float _b1 = 2.0f * _b0;
+    const float _b2 = _b0;
+    const float _a1 = 2.0f * (ohm * ohm - 1.0f) / c;
+    const float _a2 = (1.0f - 2.0f * cosf(M_PI_F / 4.0f) * ohm +ohm * ohm) / c;
 
-//	lFilter[0] = Origin[0] * _b0 + Origin[1] * _b1 + Origin[2] * _b2 - Filter[1] * _a1 - Filter[2] * _a2;
+//    lFilter[0] = Origin[0] * _b0 + Origin[1] * _b1 + Origin[2] * _b2 - Filter[1] * _a1 - Filter[2] * _a2;
 }
 ```
 
@@ -153,7 +153,7 @@ FIR 滤波就是这个个方程。x(n) 为输入信号，k(n) 为 FIR 滤波系�
 
 void FIR5Filter(void)
 {
-	const float H[ORDER + 1] = {...};
+    const float H[ORDER + 1] = {...};
 
     Filter[0] = 0;
     for (uint16_t j = 0; j < ORDER + 1; j++) {
@@ -177,20 +177,20 @@ void FIR5Filter(void)
 
 ```c
 typedef struct {
-    float x;		// state
-    float A;		// x(n)=A*x(n-1)+u(n),u(n)~N(0,q)
-    float H;		// z(n)=H*x(n)+w(n),w(n)~N(0,r)
-    float q;		// process(predict) noise convariance
-    float r;		// measure noise(error) convariance
-    float p;		// estimated error convariance
-    float gain;		// kalman gain
+    float x;        // state
+    float A;        // x(n)=A*x(n-1)+u(n),u(n)~N(0,q)
+    float H;        // z(n)=H*x(n)+w(n),w(n)~N(0,r)
+    float q;        // process(predict) noise convariance
+    float r;        // measure noise(error) convariance
+    float p;        // estimated error convariance
+    float gain;        // kalman gain
 } kalman1_filter_t;
 
 
 /**
- * @brief			一阶卡尔曼滤波初始化
- * @param[out]		state : 滤波结构数据指针
- * @param[in]		q & r
+ * @brief            一阶卡尔曼滤波初始化
+ * @param[out]        state : 滤波结构数据指针
+ * @param[in]         q & r
  */
 void kalman1_init(kalman1_filter_t *state, float q, float r)
 {
@@ -203,14 +203,14 @@ void kalman1_init(kalman1_filter_t *state, float q, float r)
 }
 
 /**
- * @brief			一阶卡尔曼滤波
- * @param[out]		state : 滤波结构数据指针
- * @param[in]		z_measure : 原始数据
+ * @brief            一阶卡尔曼滤波
+ * @param[out]        state : 滤波结构数据指针
+ * @param[in]         z_measure : 原始数据
  */
 float kalman1_filter(kalman1_filter_t *state, float z_measure)
 {
     /* Predict */
-	// 时间更新 (预测): X(k|k-1) = A(k,k-1)*X(k-1|k-1) + B(k)*u(k)
+    // 时间更新 (预测): X(k|k-1) = A(k,k-1)*X(k-1|k-1) + B(k)*u(k)
     state->x = state->A * state->x;
     // 更新先验协方差：P(k|k-1) = A(k,k-1)*A(k,k-1)^T*P(k-1|k-1)+Q(k)
     state->p = state->A * state->A * state->p + state->q;

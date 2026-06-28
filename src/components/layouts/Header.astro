@@ -1,0 +1,46 @@
+---
+import ThemeToggle from "./ThemeToggle.tsx";
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/posts", label: "Blogs" },
+  { href: "/about", label: "About" },
+];
+
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
+const subpath = pathname.match(/[^\/]+/g);
+---
+
+<header
+  class="border-border/30 bg-background/80 sticky top-0 z-50 w-full backdrop-blur-md"
+>
+  <div class="mx-auto flex h-16 max-w-280 items-center justify-between px-6">
+    <a href="/" class="text-primary text-2xl font-bold"> air wish Blog </a>
+
+    {/* Navigation Links */}
+    <nav class="hidden items-center gap-6 md:flex">
+      {
+        navLinks.map(({ href, label }) => {
+          const isActive =
+            href === pathname || href === "/" + (subpath?.[0] || "");
+          return (
+            <a
+              href={href}
+              class:list={[
+                "text-muted-foreground hover:text-primary inline-block border-b-2 border-transparent pb-0.5 text-sm font-semibold no-underline transition-colors",
+                { "border-primary text-primary": isActive },
+              ]}
+            >
+              {label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    {/* Theme Toggle */}
+    <div class="text-primary flex items-center gap-1">
+      <ThemeToggle client:idle />
+    </div>
+  </div>
+</header>

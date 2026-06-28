@@ -38,7 +38,7 @@ pnpm format       # Run Prettier formatting
 - `src/components/home/` — homepage sections (Hero, Featured Posts, Recent Posts).
 - `src/pages/` — file-based routing. `posts/[...slug].astro` handles dynamic post routes.
 - `src/content/posts/` — Markdown/MDX blog posts
-- `src/assets/` — images used in the blog posts.
+- `src/assets/` — images used in blog posts.
 
 ## Styling
 
@@ -55,8 +55,9 @@ Path alias `@/*` resolves to `src/*`. shadcn components are configured via `comp
 - `.astro` components for layout and static rendering.
 - `.tsx` React components for interactivity (e.g., `ThemeToggle.tsx`).
 - Dark mode is toggled via the `.dark` class on `<html>` (stored in `localStorage`).
-- Animations use the `motion` library, and `tw-animate-css`.
-- Client-side state uses **Zustand** (`create` from `zustand`). Co-locate the store in the component file when the state is local to one component; create a dedicated `src/store/` file only when state is shared across multiple components.
+- Animations use the `motion/react` library.
+- Client-side state uses `zustand` (`create` from `zustand`). Co-locate the store in the component file when the state is local to one component; create a dedicated `src/store/` file only when state is shared across multiple components.
+- Need to write code comments.
 
 ## Content Collections
 

@@ -227,7 +227,7 @@ pid->outPutI = pid->Ki * (pid->errNow + pid->errLast) / 2.0f;
 #include <math.h>
 
 static float floatLimitMinMax(float val, float min, float max) {
-	  return fminf(fmaxf(val, min), max);
+    return fminf(fmaxf(val, min), max);
 }
 
 pid->Output = floatLimitMinMax(pid->Output, -pid->out_Max, pid->out_Max);

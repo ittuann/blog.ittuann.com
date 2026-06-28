@@ -1,4 +1,4 @@
-# blog.ittuann.com
+# [blog.ittuann.com](https://blog.ittuann.com)
 
-> [!NOTE]
+> [!TIP]
 > https://blog.ittuann.com

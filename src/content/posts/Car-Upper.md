@@ -4,7 +4,7 @@ description: 上位机和下位机设置：匿名上位机 V7，TFMiniPlus 激�
 pubDate: 2021-08-28
 tags: ["智能车"]
 category: ["Tech"]
-heroImage: "../../assets/Car-3.webp"
+heroImage: "../../assets/Car-5.webp"
 ---
 
 # 匿名上位机 V7 通信协议
@@ -17,9 +17,9 @@ heroImage: "../../assets/Car-3.webp"
 #define BYTE2(dwTemp)       (*( (char *)(&dwTemp) + 2))   /* !< uint32_t 数据拆分 byte2 */
 #define BYTE3(dwTemp)       (*( (char *)(&dwTemp) + 3))   /* !< uint32_t 数据拆分 byte3 */
 
-#define USERDATALEN 2						 // 数据长度
+#define USERDATALEN 2                         // 数据长度
 
-uint8_t waveform[6 + USERDATALEN] = {0};     // 数据帧缓存
+uint8_t waveform[6 + USERDATALEN] = {0};      // 数据帧缓存
 
 /*
  * @name:       void Wireless_Send(void)
@@ -27,38 +27,38 @@ uint8_t waveform[6 + USERDATALEN] = {0};     // 数据帧缓存
  */
 void Wireless_Send(void)
 {
-	uint8_t waveform[6 + UserDataLen] = {0};    // 数据帧缓存
+    uint8_t waveform[6 + UserDataLen] = {0};   // 数据帧缓存
     uint8_t _cnt = 0;
 
     memset(waveform, 0, sizeof(waveform));
 
-    waveform[_cnt++] = 0xAA;        			// 帧头
-    waveform[_cnt++] = 0xFF;        			// 目标地址
-    waveform[_cnt++] = 0xF1;        			// 功能码 ID
-//	waveform[_cnt++] = sizeof(waveform) - 6;  	// 有效数据长度
-//	waveform[_cnt++] = UserDataLen;
+    waveform[_cnt++] = 0xAA;                    // 帧头
+    waveform[_cnt++] = 0xFF;                    // 目标地址
+    waveform[_cnt++] = 0xF1;                    // 功能码 ID
+//    waveform[_cnt++] = sizeof(waveform) - 6;  // 有效数据长度
+//    waveform[_cnt++] = UserDataLen;
     waveform[_cnt++] = 0;
 
     int16_t UserData_1 = (int16_t)(Mortor1.Speed_Read);
 
     //数据区使用小端模式，低字节在前。
-    waveform[_cnt++] = BYTE0(UserData_1);   	// 数据内容
+    waveform[_cnt++] = BYTE0(UserData_1);       // 数据内容
     waveform[_cnt++] = BYTE1(UserData_1);
 
-    waveform[3] = _cnt - 4; 					// 写入有效数据字节数
+    waveform[3] = _cnt - 4;                     // 写入有效数据字节数
 
-    uint8_t sumcheck = 0;  			 			// 和校验 SC
-    uint8_t addcheck = 0;   					// 附加校验 AC
+    uint8_t sumcheck = 0;                       // 和校验 SC
+    uint8_t addcheck = 0;                       // 附加校验 AC
     for(uint8_t i = 0; i < waveform[3] + 4; i++) {
-      sumcheck += waveform[i];      			// 从帧头开始，一直到 data 区结束，对每一字节进行累加操作，只取低 8 位
-      addcheck += sumcheck;         			// 计算和校验时，每进行一字节的加法运算，同时进行一次 sumcheck 的累加操作，只取低 8 位
+      sumcheck += waveform[i];                  // 从帧头开始，一直到 data 区结束，对每一字节进行累加操作，只取低 8 位
+      addcheck += sumcheck;                     // 计算和校验时，每进行一字节的加法运算，同时进行一次 sumcheck 的累加操作，只取低 8 位
     }
     waveform[_cnt++] = sumcheck;
     waveform[_cnt++] = addcheck;
 
     // 串口发送数据
     seekfree_wireless_send_buff(waveform, sizeof(waveform));
-//	HAL_UART_Transmit(&huart1, (uint8_t*)waveform, _cnt, 2);
+//    HAL_UART_Transmit(&huart1, (uint8_t*)waveform, _cnt, 2);
 }
 ```
 
@@ -137,13 +137,13 @@ void TFminiPlus_Proc2(uint8_t data)
  */
 void TFminiPlus_GetOnce(void)
 {
-    uint8_t TFminiPlus_cmd[4] = {0};	// 暂存命令帧
-//	memset(TFminiPlus_cmd, 0, sizeof(TFminiPlus_cmd));
+    uint8_t TFminiPlus_cmd[4] = {0};    // 暂存命令帧
+//    memset(TFminiPlus_cmd, 0, sizeof(TFminiPlus_cmd));
 
-    TFminiPlus_cmd[0] = 0x5A;    		//指令帧帧头
-    TFminiPlus_cmd[1] = 0x04;    		//指令帧总长度
-    TFminiPlus_cmd[2] = 0x04;    		//ID
-    TFminiPlus_cmd[3] = 0x62;    		//Data
+    TFminiPlus_cmd[0] = 0x5A;            //指令帧帧头
+    TFminiPlus_cmd[1] = 0x04;            //指令帧总长度
+    TFminiPlus_cmd[2] = 0x04;            //ID
+    TFminiPlus_cmd[3] = 0x62;            //Data
 
     uart_putbuff(UART_3, TFminiPlus_cmd, sizeof(TFminiPlus_cmd)); //串口发送指令
 }
