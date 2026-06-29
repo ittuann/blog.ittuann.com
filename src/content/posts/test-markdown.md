@@ -3,9 +3,8 @@ title: "Markdown Style Test"
 description: "Here is a sample of some basic Markdown syntax that can be used when writing Markdown."
 pubDate: "2026-06-06"
 updatedDate: "2026-06-17"
-tags: ["⭐", "test"]
+tags: ["Other"]
 category: ["Tech"]
-pinned: 1
 heroImage: "../../assets/blog-placeholder-1.jpg"
 ---
 

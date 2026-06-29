@@ -61,8 +61,8 @@ export default function PostsList({ posts }: Props) {
     return [...map.entries()].sort(([a], [b]) => b - a);
   }, [filteredPosts]);
 
-  const sortedTags = Object.entries(tagCounts).sort(([a], [b]) =>
-    a.localeCompare(b),
+  const sortedTags = Object.entries(tagCounts).sort(
+    ([a, countA], [b, countB]) => countB - countA || a.localeCompare(b),
   );
 
   return (

@@ -2,7 +2,7 @@
 title: STM32CubeIDE 的一些使用技巧
 description: 探索 STM32CubeIDE 的功能。记录了些基础功能还有方法和技巧等等。
 pubDate: 2021-12-24
-tags: ["STM32", "RoboMaster"]
+tags: ["STM32"]
 category: ["Tech"]
 ---
 

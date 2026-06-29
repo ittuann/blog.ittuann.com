@@ -1,8 +1,8 @@
 ---
-title: CAN 通信配置过滤器和使用三个邮箱发送
+title: CAN 通信配置过滤器，并为 RoboMaster 使用三个邮箱发送
 description: 配置 CAN 筛选器，接收以及发送的代码。
 pubDate: 2021-12-26
-tags: ["STM32", "RoboMaster"]
+tags: ["STM32"]
 category: ["Tech"]
 ---
 

@@ -2,7 +2,7 @@
 title: Keil 的一些使用技巧
 description: 在开发中 Keil 的一点使用技巧：使用 ARM V6 编译器和 gun11 标准；查找导致进入 HardFault_Handler 的函数；SAVE 命令将数据导出到文件；开启 FPU 硬件浮点数和添加 DSP 库
 pubDate: 2021-12-25
-tags: ["STM32", "RoboMaster"]
+tags: ["STM32"]
 category: ["Tech"]
 ---
 
