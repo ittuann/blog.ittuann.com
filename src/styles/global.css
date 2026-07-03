@@ -1,12 +1,11 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "shadcn/tailwind.css";
 @import "tw-animate-css";
 @import "@fontsource-variable/noto-sans";
 
 /* Math support */
 @import "katex/dist/katex.min.css";
-
-@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -131,10 +130,10 @@
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply text-base;
   }
   body {
-    @apply bg-background text-foreground break-words;
+    @apply bg-background text-foreground;
   }
   html {
     @apply font-mono;

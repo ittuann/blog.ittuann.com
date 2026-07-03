@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import type { ImageMetadata } from "astro";
 import FormattedDate from "./FormattedDate.astro";
 import { IconTags, IconSparkleHighlight } from "@tabler/icons-react";
-import { GlareHover } from "@/components/ui/glare-hover.tsx";
+import { MagicCard } from "@/components/ui/magic-card";
 
 import { getFallbackImage } from "../utils/getFallbackImage.ts";
 
@@ -22,12 +22,7 @@ const { href, title, description, pubDate, tags, category, pinned, heroImage } =
   Astro.props;
 ---
 
-<GlareHover
-  client:visible
-  width="100%"
-  background="transparent"
-  className="rounded-3xl"
->
+<MagicCard client:visible gradientColor="#7fabde" className="rounded-3xl p-0">
   <article
     class="group bg-muted/50 hover:border-border/30 hover:bg-secondary/60 flex w-full flex-col items-center gap-6 rounded-3xl border border-transparent p-3 transition-all md:flex-row"
   >
@@ -96,4 +91,4 @@ const { href, title, description, pubDate, tags, category, pinned, heroImage } =
       </div>
     </div>
   </article>
-</GlareHover>
+</MagicCard>

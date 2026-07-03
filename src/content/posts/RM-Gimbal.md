@@ -1,6 +1,6 @@
 ---
 title: RoboMaster 程序框架开源
-description: 第二十一届 RoboMaster 机甲大师竞赛 Ares 战队 空中机器人六轴无人机云台程序框架开源
+description: 第二十一届 RoboMaster 机甲大师竞赛 Ares 战队 - 空中机器人六轴无人机云台程序框架开源
 pubDate: 2022-08-17
 tags: ["⭐", "STM32"]
 category: ["Tech"]

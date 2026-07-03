@@ -17,7 +17,7 @@ const posts = defineCollection({
       tags: z.array(z.string()).default([]),
       // Categories the post belongs to.
       category: z.array(z.string()).default([]),
-      // When set, the post is featured; higher numbers rank higher.
+      // When set, the post is featured; higher numbers rank higher in homepage featured section.
       pinned: z.number().optional(),
       heroImage: z.optional(image()),
     }),
