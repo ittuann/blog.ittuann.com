@@ -47,7 +47,8 @@ pnpm format       # Run Prettier formatting
 
 Uses **Tailwind CSS 4**.
 
-Only use `shadcn/ui` CSS color variables in `src/styles/global.css`. Do not add custom color palettes.
+Only use `shadcn/ui` CSS color variables in `src/styles/global.css`. Do not add external or custom color palettes.
+Always use predefined variables and utility classes (e.g., radius-xl, text-lg, shadow-md, etc.), to maintain UI consistency. Avoid hardcoded absolute pixel values.
 
 The `@theme` directive in `global.css`. No `tailwind.config.*` file.
 

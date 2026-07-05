@@ -22,9 +22,15 @@ const { href, title, description, pubDate, tags, category, pinned, heroImage } =
   Astro.props;
 ---
 
-<MagicCard client:visible gradientColor="#7fabde" className="rounded-3xl p-0">
+<MagicCard
+  client:visible
+  gradientColor="#7fabde"
+  gradientSize={150}
+  gradientBorderColor="transparent"
+  className="rounded-3xl p-0"
+>
   <article
-    class="group bg-muted/50 hover:border-border/30 hover:bg-secondary/60 flex w-full flex-col items-center gap-6 rounded-3xl border border-transparent p-3 transition-all md:flex-row"
+    class="group bg-muted/50 hover:border-border/30 hover:bg-secondary/50 flex w-full flex-col items-center gap-6 rounded-3xl border border-transparent p-3 transition-all md:flex-row"
   >
     <a
       href={href}

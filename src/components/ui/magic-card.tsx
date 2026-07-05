@@ -15,6 +15,7 @@ interface MagicCardBaseProps {
   gradientSize?: number
   gradientFrom?: string
   gradientTo?: string
+  gradientBorderColor?: string
 }
 
 interface MagicCardGradientProps extends MagicCardBaseProps {
@@ -61,6 +62,7 @@ export function MagicCard(props: MagicCardProps) {
     gradientOpacity = 0.8,
     gradientFrom = "#9E7AFF",
     gradientTo = "#FE8BBB",
+    gradientBorderColor = "var(--color-border)",
     mode = "gradient",
   } = props
 
@@ -169,7 +171,7 @@ export function MagicCard(props: MagicCardProps) {
           radial-gradient(${gradientSize}px circle at ${mouseX}px ${mouseY}px,
             ${gradientFrom},
             ${gradientTo},
-            var(--color-border) 100%
+            ${gradientBorderColor} 100%
           ) border-box
         `,
       }}
