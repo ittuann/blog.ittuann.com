@@ -1,0 +1,154 @@
+---
+title: VS Code 字体中英等宽对齐的选择
+description: 关于 VS Code 字体的选择，配置为中文英文宽度比例符合 2:1 的 Sarasa Mono SC 更纱黑体。
+pubDate: 2023-05-12
+tags: ["Other"]
+category: ["Tech"]
+---
+
+我对字体的需求，首先最基本的要求是`IiLl10O`区分都要很明显；
+
+其次，我更偏好**等宽字体**（`Monospaced Font`），不能对齐什么的对强迫症太不友好了。
+
+另外我目前还有要写中文注释的项目，所以需要**中文英文宽度比例为 2:1 对齐的字体**，即字体支持中英文对齐。
+
+关于连字符，字体支持是加分项，没有也能够接受。
+
+## 正在使用的字体
+
+- `Sarasa Gothic` 更纱黑体
+
+  `Sarasa Mono SC` 是我正在用的字体。字体支持中英 2:1 对齐，也支持连字符。
+
+  终端里使用 `Sarasa Term SC`，同样是等宽字体。同时在终端里使用 Iosevka 的 `IosevkaTerm Nerd Font Mono` 作为 Fallback 以支持 Nerd Font
+
+## 能接受的字体
+
+- `LXGW WenKai Mono` 霞鹜文楷
+
+  中英 2:1 对齐的等宽字体。不支持连字符。
+
+- `Inconsolata`
+
+  Google 出品。中英 2:1 对齐的等宽字体。不支持连字符。 <https://fonts.google.com/specimen/Inconsolata>
+
+- `Ubuntu Sans Mono`
+
+  Ubuntu 的最新版字体。中英 2:1 对齐的等宽字体。https://fonts.google.com/specimen/Ubuntu+Sans+Mono
+
+- `JetBrains Maple Mono`
+
+  JetBrains Mono 看起来真的挺舒服的，可惜中文不支持等宽。这款是由 [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) + [Maple Mono](https://github.com/subframe7536/maple-font) 合成字体，支持中英 2:1 对齐等宽。
+
+对于终端，最好配置  `Nerd-Font` 图标字体。Windows 平台用`scoop bucket add nerd-fonts`，Linux 平台用`sudo apt install fonts-powerline`
+
+### 其他
+
+- `Fira Code`: 开源等宽字体，可惜中文不支持等宽。https://github.com/tonsky/FiraCode
+
+- `SF Mono`：来自 Apple
+- `Cascadia Code`：Microsoft 出品，等宽字体支持连字符
+
+另外还想吐槽一下，`Consolas`的 1 和 l 区分真的不是很明显啊。
+
+## 字体包装
+
+- `otf` (Open Type)
+- `ttf` (True Type)
+- `ttc` (True Type Collection)
+- `ttc` (Super TTC)
+- `variable_ttf` (Variable True Type)
+- `woff` (Web Open Font Format) / `woff2` (Web Open Font Format 2)
+
+**优先选择 Open Type 字体文件格式**。
+
+TTC 是几个 TTF 合成的字库。TTC 会合并多种 TrueType 字体同一笔划信息共享以节省字体文件所占空间。
+
+Super TTC 将所有字体打包在一起，形成一个单一文件。这是推荐的桌面使用 TTC 字体的安装方式。
+
+如果 TTC 遇到软件兼容性问题，就要选择 TTF。
+
+Web Open Font Format 主要为网络传输优化，其特点是字体均经过压缩，其大小会比较小。
+
+Variable True Type 是可以无极变换的 True Type 字体。
+
+## 字体格式
+
+更纱黑体的文件名：
+
+```
+sarasa-moon-sc-regular.ttf
+```
+
+
+它由多个部分组成，分别是：
+
+- 字体家族名称：sarasa。代表这是更纱黑体家族的字体。
+- 字体风格 (Style)：fixed。分为 Gothic、UI、Mono、Term、Fixed、Slab。
+- 汉字字形 (Orthography)：sc 简体中文。根据不同使用中文地区的标准，字形分为 CL、HC、J、K、SC、TC 六种。
+- 字重：regular。代表字体的粗细。从细到粗为 extralight、light、regular、semibold、bold 等。
+
+- 连字：Ligature。体现在 ->、<>、!=等等
+
+
+
+- 更纱黑体家族的字体风格
+
+| 风格     | 等宽 | 弯引号 | 破折号 | 连字 | 衬线 |
+| -------- | ---- | ------ | ------ | ---- | ---- |
+| Gothic   | 否   | 全宽   | 全宽   | 否   | 否   |
+| UI       | 否   | 半宽   | 全宽   | 否   | 否   |
+| Mono     | 是   | 半宽   | 全宽   | 是   | 否   |
+| Term     | 是   | 半宽   | 半宽   | 是   | 否   |
+| Fixed    | 是   | 半宽   | 半宽   | 否   | 否   |
+| MonoSlab | 是   | 半宽   | 全宽   | 是   | 是   |
+
+- 字重
+
+| 缩写      | 字重             |
+| --------- | ---------------- |
+| regular   | 常规字体         |
+| italic    | 斜体（意大利体） |
+| light     | 细体             |
+| bold      | 粗体             |
+| SemiBold  | 半粗字体         |
+| ExtraBold | 超粗字体         |
+
+- 汉字字形
+
+| 缩写 | 汉字字形                                                     |
+| ---- | ------------------------------------------------------------ |
+| SC   | Simplified Chinese。简体中文，中国内地、大马、新加坡等地字形 |
+| TC   | Traditional Chinese。繁体中文，台湾地区的字形                |
+| J    | Japaness。日本语，日文新字形的字形                           |
+| K    | Korean。朝鲜语（韩语），朝鲜半岛和朝鲜族的字形               |
+| HC   | HongKong Chinese。香港繁体和澳门繁体的字形                   |
+| CL   | Classical。旧字 (古典) 体汉字字形，仅用于需要使用旧字形的场景  |
+
+例如中国大陆、中国香港、日本的 `冷` 字写法都不一样。
+
+## VS Code 设置
+
+VS Code 默认字体为 `Consolas, 'Courier New', monospace`
+
+如果字体名称包含空格，则需用引号`'`将字体名称括起。
+
+VS Code 允许同时设置多个字体，不同字体间用 `,` 分隔，VSCode 则会按照给出的字体顺序选择。当第一个字体能够在系统上找到，则使用第一个字体；否则判断第二个字体，依次类推。
+
+```json
+{
+  "editor.fontFamily": "'Sarasa Mono SC', Inconsolata",
+  "terminal.integrated.fontFamily": "'Sarasa Term SC', 'IosevkaTerm Nerd Font Mono'",
+
+  "editor.fontLigatures": true, // 启用连字符 (还需字体本身支持连字符
+  "editor.fontVariations": true, // 启用可变字重
+
+  "editor.fontSize": 14, // 字体大小
+  "editor.fontWeight": 400, // 字重 (400 为 Regular/normal 标准字重
+}
+```
+
+## 参考资源
+
+https://fonts.zeoseven.com/items/159/
+

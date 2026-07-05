@@ -1,6 +1,6 @@
 ---
 title: "Markdown Style Test"
-description: "Here is a sample of some basic Markdown syntax that can be used when writing Markdown."
+description: "Testing the Markdown syntax of the new blog framework."
 pubDate: "2026-06-06"
 updatedDate: "2026-06-17"
 tags: ["Other"]
