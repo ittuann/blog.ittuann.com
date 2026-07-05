@@ -4,6 +4,7 @@ import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { BlurFade } from "@/components/ui/blur-fade";
 import { GlareHover } from "@/components/ui/glare-hover";
 import { Pointer } from "@/components/ui/pointer";
+import { SpinningText } from "@/components/ui/spinning-text";
 
 interface PostData {
   id: string;
@@ -146,16 +147,14 @@ export function FeaturedPostsInteractive({
         </BlurFade>
 
         <Pointer>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+          <SpinningText
+            reverse
+            className="text-accent-foreground/80 text-base"
+            duration={10}
+            radius={5}
           >
-            <circle cx="12" cy="12" r="10" className="fill-primary/75" />
-            <circle cx="12" cy="12" r="5" className="fill-white/90" />
-          </svg>
+            DISCOVER • OPEN • EXPLORE •
+          </SpinningText>
         </Pointer>
       </div>
     </div>
