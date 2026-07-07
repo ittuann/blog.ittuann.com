@@ -27,22 +27,5 @@ const { posts } = Astro.props;
     </BlurFade>
   </div>
 
-  <div class="grid grid-cols-1 gap-6">
-    {
-      posts.map((post) => (
-        <BlurFade client:visible inView delay={0.1}>
-          <PostsCard
-            href={`/posts/${post.id}/`}
-            title={post.data.title}
-            description={post.data.description}
-            pubDate={post.data.pubDate}
-            tags={post.data.tags}
-            category={post.data.category}
-            heroImage={post.data.heroImage}
-            pinned={post.data.pinned}
-          />
-        </BlurFade>
-      ))
-    }
-  </div>
+  <PostsCard posts={posts} />
 </section>

@@ -1,22 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
+import type { CollectionEntry } from "astro:content";
 import { IconTags, IconSparkleHighlight } from "@tabler/icons-react";
 
-interface PostData {
-  id: string;
-  title: string;
-  description: string;
-  pubDate: string;
-  tags: string[];
-  category: string[];
-  pinned?: number;
-  heroImageSrc: string;
-}
-
 interface Props {
-  posts: PostData[];
+  posts: CollectionEntry<"posts">[];
+  // Astro optimized hero image src for each post, keyed by post id (produced via Astro's getImage()).
+  heroImages: Record<string, string>;
 }
 
-export default function PostsList({ posts }: Props) {
+export default function PostsList({ posts, heroImages }: Props) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   useEffect(() => {
@@ -39,7 +31,7 @@ export default function PostsList({ posts }: Props) {
   const tagCounts = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const post of posts) {
-      for (const tag of post.tags) {
+      for (const tag of post.data.tags) {
         counts[tag] = (counts[tag] ?? 0) + 1;
       }
     }
@@ -48,13 +40,13 @@ export default function PostsList({ posts }: Props) {
 
   const filteredPosts = useMemo(() => {
     if (!selectedTag) return posts;
-    return posts.filter((p) => p.tags.includes(selectedTag));
+    return posts.filter((p) => p.data.tags.includes(selectedTag));
   }, [posts, selectedTag]);
 
   const yearGroups = useMemo(() => {
-    const map = new Map<number, PostData[]>();
+    const map = new Map<number, CollectionEntry<"posts">[]>();
     for (const post of filteredPosts) {
-      const y = new Date(post.pubDate).getFullYear();
+      const y = new Date(post.data.pubDate).getFullYear();
       if (!map.has(y)) map.set(y, []);
       map.get(y)!.push(post);
     }
@@ -140,7 +132,7 @@ export default function PostsList({ posts }: Props) {
             <div className="relative">
               <div className="bg-border/40 left-4.75rem absolute top-0 bottom-6 w-px" />
               {yearPosts.map((post) => {
-                const d = new Date(post.pubDate);
+                const d = new Date(post.data.pubDate);
                 const dateStr = `${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
                 return (
@@ -149,7 +141,7 @@ export default function PostsList({ posts }: Props) {
                       {dateStr}
                     </span>
                     <div className="z-10 flex w-6 shrink-0 items-center justify-center">
-                      {post.pinned !== undefined ? (
+                      {post.data.pinned !== undefined ? (
                         <IconSparkleHighlight
                           size={16}
                           stroke={2}
@@ -165,7 +157,7 @@ export default function PostsList({ posts }: Props) {
                     >
                       <div className="w-4.5rem aspect-4/3 shrink-0 overflow-hidden rounded-xl">
                         <img
-                          src={post.heroImageSrc}
+                          src={heroImages[post.id]}
                           alt=""
                           width={144}
                           height={108}
@@ -174,13 +166,13 @@ export default function PostsList({ posts }: Props) {
                       </div>
                       <div className="flex min-w-0 flex-col gap-1.5">
                         <h3 className="text-foreground group-hover:text-primary line-clamp-2 text-sm leading-snug font-semibold transition-colors">
-                          {post.title}
+                          {post.data.title}
                         </h3>
                         <p className="text-muted-foreground line-clamp-2 text-xs leading-snug">
-                          {post.description}
+                          {post.data.description}
                         </p>
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                          {post.category.map((cat) => (
+                          {post.data.category.map((cat) => (
                             <span
                               key={cat}
                               className="bg-secondary text-primary rounded-full px-2 py-0.5 text-xs font-medium tracking-tight"
@@ -188,10 +180,10 @@ export default function PostsList({ posts }: Props) {
                               {cat}
                             </span>
                           ))}
-                          {post.tags.length > 0 && (
+                          {post.data.tags.length > 0 && (
                             <span className="text-muted-foreground flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs">
                               <IconTags size={14} stroke={2} />
-                              {post.tags.map((tag) => (
+                              {post.data.tags.map((tag) => (
                                 <button
                                   key={tag}
                                   onClick={(e) => {

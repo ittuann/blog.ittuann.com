@@ -12,32 +12,31 @@ interface Props {
 
 const { posts, maxPosts = 4 } = Astro.props;
 
-const postData = await Promise.all(
-  posts.slice(0, maxPosts).map(async (post) => ({
-    id: post.id,
-    title: post.data.title,
-    description: post.data.description,
-    pubDate: post.data.pubDate.toISOString(),
+const displayPosts = posts.slice(0, maxPosts);
 
-    heroImageSrc: post.data.heroImage
-      ? (
+const heroImageSrcs: Record<string, string> = Object.fromEntries(
+  await Promise.all(
+    displayPosts
+      .filter((post) => post.data.heroImage)
+      .map(async (post) => [
+        post.id,
+        (
           await getImage({
-            src: post.data.heroImage,
+            src: post.data.heroImage!,
             width: 640,
             height: 480,
             format: "webp",
           })
-        ).src
-      : null,
-    category: post.data.category,
-    tags: post.data.tags,
-  })),
+        ).src,
+      ]),
+  ),
 );
 ---
 
 {
-  postData.length > 0 && (
+  displayPosts.length > 0 && (
     <section class="bg-secondary/25 relative overflow-hidden">
+      {/* DotField */}
       <div class="absolute inset-0">
         <DotField
           client:visible
@@ -56,6 +55,7 @@ const postData = await Promise.all(
         />
       </div>
 
+      {/* Title */}
       <div class="relative mx-auto max-w-280 px-6 py-16">
         <BlurFade client:idle inView direction="up">
           <div class="mb-6">
@@ -66,10 +66,11 @@ const postData = await Promise.all(
           </div>
         </BlurFade>
 
+        {/* Featured Posts */}
         <FeaturedPostsInteractive
           client:idle
-          posts={postData}
-          maxPosts={maxPosts}
+          posts={displayPosts}
+          heroImageSrcs={heroImageSrcs}
         />
       </div>
     </section>

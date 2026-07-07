@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import type { CollectionEntry } from "astro:content";
 import { motion, AnimatePresence } from "motion/react";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { BlurFade } from "@/components/ui/blur-fade";
@@ -6,13 +7,10 @@ import { GlareHover } from "@/components/ui/glare-hover";
 import { Pointer } from "@/components/ui/pointer";
 import { SpinningText } from "@/components/ui/spinning-text";
 
-interface PostData {
-  id: string;
-  title: string;
-  description: string;
-  heroImageSrc: string | null;
-  category: string[];
-  tags: string[];
+interface Props {
+  posts: CollectionEntry<"posts">[];
+  // Astro optimized hero image src for each post, keyed by post id (produced via Astro's getImage()).
+  heroImageSrcs: Record<string, string>;
 }
 
 interface FeaturedPostsState {
@@ -25,16 +23,9 @@ const useFeaturedPostsStore = create<FeaturedPostsState>((set) => ({
   setSelectedIndex: (index) => set({ selectedIndex: index }),
 }));
 
-export function FeaturedPostsInteractive({
-  posts,
-  maxPosts = 4,
-}: {
-  posts: PostData[];
-  maxPosts?: number;
-}) {
+export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
   const { selectedIndex, setSelectedIndex } = useFeaturedPostsStore();
-  const displayPosts = posts.slice(0, maxPosts);
-  const selected = displayPosts[selectedIndex];
+  const selected = posts[selectedIndex];
 
   if (!selected) return null;
 
@@ -43,7 +34,7 @@ export function FeaturedPostsInteractive({
       {/* Left: list of pinned posts */}
       <BlurFade inView>
         <div className="flex flex-col gap-4">
-          {displayPosts.map((post, i) => (
+          {posts.map((post, i) => (
             <button
               key={post.id}
               onClick={() => setSelectedIndex(i)}
@@ -54,10 +45,10 @@ export function FeaturedPostsInteractive({
               }`}
             >
               <div className="flex items-center gap-3">
-                {post.heroImageSrc && (
+                {heroImageSrcs[post.id] && (
                   <div className="h-12 w-16 shrink-0 overflow-hidden rounded-md">
                     <img
-                      src={post.heroImageSrc}
+                      src={heroImageSrcs[post.id]}
                       alt=""
                       className="h-full w-full object-cover"
                     />
@@ -65,11 +56,11 @@ export function FeaturedPostsInteractive({
                 )}
                 <div>
                   <h3 className="text-foreground mb-1 text-lg leading-tight font-semibold">
-                    {post.title}
+                    {post.data.title}
                   </h3>
                   <div className="flex items-center gap-2">
                     <span className="text-primary text-xs font-semibold tracking-wider">
-                      {post.category[0] ?? "blog"}
+                      {post.data.category[0] ?? "blog"}
                     </span>
                   </div>
                 </div>
@@ -103,14 +94,14 @@ export function FeaturedPostsInteractive({
                 <div className="flex h-full flex-col overflow-hidden md:flex-row">
                   <div className="flex flex-grow flex-col p-6 md:w-1/2">
                     <h3 className="text-foreground mb-4 text-2xl leading-tight font-bold">
-                      {selected.title}
+                      {selected.data.title}
                     </h3>
                     <p className="text-muted-foreground mb-4 line-clamp-4 text-lg">
-                      {selected.description}
+                      {selected.data.description}
                     </p>
                     <div className="mb-6 flex items-center gap-2">
                       <span className="bg-secondary text-primary rounded-full px-2 py-0.5 text-xs font-semibold tracking-wider">
-                        {selected.category[0] ?? "blog"}
+                        {selected.data.category[0] ?? "blog"}
                       </span>
                     </div>
                     <motion.a
@@ -131,10 +122,10 @@ export function FeaturedPostsInteractive({
                       </motion.span>
                     </motion.a>
                   </div>
-                  {selected.heroImageSrc && (
+                  {heroImageSrcs[selected.id] && (
                     <div className="w-full p-2 md:w-1/2">
                       <img
-                        src={selected.heroImageSrc}
+                        src={heroImageSrcs[selected.id]}
                         alt="Featured post hero image"
                         className="h-full min-h-48 w-full rounded-2xl object-cover"
                       />

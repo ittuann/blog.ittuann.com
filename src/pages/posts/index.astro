@@ -10,30 +10,22 @@ const posts = (await getCollection("posts")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const postsData = await Promise.all(
-  posts.map(async (post) => {
-    const img = await getImage({
-      src: post.data.heroImage ?? getFallbackImage(post.data.pubDate),
-      width: 144,
-      height: 108,
-    });
-
-    return {
-      id: post.id,
-      title: post.data.title,
-      description: post.data.description,
-      pubDate: post.data.pubDate.toISOString(),
-      tags: post.data.tags,
-      category: post.data.category,
-      pinned: post.data.pinned,
-      heroImageSrc: img.src,
-    };
-  }),
+const heroImages = Object.fromEntries(
+  await Promise.all(
+    posts.map(async (post) => {
+      const img = await getImage({
+        src: post.data.heroImage ?? getFallbackImage(post.data.pubDate),
+        width: 144,
+        height: 108,
+      });
+      return [post.id, img.src];
+    }),
+  ),
 );
 ---
 
 <Layout>
   <main class="w-full flex-grow">
-    <PostsList posts={postsData} client:load />
+    <PostsList posts={posts} heroImages={heroImages} client:load />
   </main>
 </Layout>
