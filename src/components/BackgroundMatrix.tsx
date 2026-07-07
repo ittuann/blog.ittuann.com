@@ -56,13 +56,15 @@ export const BackgroundMatrix: React.FC = () => {
   const [crosses, setCrosses] = useState<AnimatedElement[]>([]);
   const [circles, setCircles] = useState<AnimatedElement[]>([]);
   const [waves, setWaves] = useState<AnimatedElement[]>([]);
+  const [triangles, setTriangles] = useState<AnimatedElement[]>([]);
 
   useEffect(() => {
     setSquares(generateRandomElements(6, 10, 40, 5));
     setDiamonds(generateRandomElements(8, 12, 30, 6));
     setCrosses(generateRandomElements(15, 10, 25, 4));
     setCircles(generateRandomElements(12, 40, 100, 6));
-    setWaves(generateRandomElements(4, 30, 80, 8));
+    setTriangles(generateRandomElements(6, 15, 35, 6));
+    setWaves(generateRandomElements(3, 30, 80, 8));
   }, []);
 
   return (
@@ -178,7 +180,42 @@ export const BackgroundMatrix: React.FC = () => {
         />
       ))}
 
-      {/* 5. 波浪线 */}
+      {/* 5. 三角形 旋转 */}
+      {triangles.map((tr) => (
+        <motion.svg
+          key={tr.id}
+          className="absolute overflow-visible"
+          style={{
+            top: `${tr.y}%`,
+            left: `${tr.x}%`,
+            width: tr.size,
+            height: tr.size,
+          }}
+          viewBox="0 0 100 100"
+          initial={{ opacity: 0, rotate: 0 }}
+          animate={{
+            opacity: [0, 0.7, 0],
+            scale: [0.8, 1.1, 0.8],
+            rotate: [0, 120, 240],
+          }}
+          transition={{
+            duration: tr.duration,
+            repeat: Infinity,
+            delay: tr.delay,
+            ease: "easeInOut",
+          }}
+        >
+          <polygon
+            points="50,6 94,90 6,90"
+            fill="none"
+            stroke="#cbd5e1"
+            strokeWidth="4"
+            strokeLinejoin="round"
+          />
+        </motion.svg>
+      ))}
+
+      {/* 6. 波浪线 */}
       {waves.map((wv) => (
         <motion.svg
           key={wv.id}

@@ -32,19 +32,19 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
   return (
     <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
       {/* Left: list of pinned posts */}
-      <BlurFade inView>
+      <BlurFade inView className="order-2 lg:order-1">
         <div className="flex flex-col gap-4">
           {posts.map((post, i) => (
             <button
               key={post.id}
               onClick={() => setSelectedIndex(i)}
-              className={`cursor-pointer rounded-xl border-l-4 p-4 text-left transition-colors ${
+              className={`h-24 cursor-pointer rounded-xl border-l-4 p-4 text-left transition-colors ${
                 i === selectedIndex
                   ? "border-l-primary/80 bg-card/85 shadow-sm"
                   : "hover:bg-secondary/70 border-l-transparent"
               }`}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex h-full items-center gap-3">
                 {heroImageSrcs[post.id] && (
                   <div className="h-12 w-16 shrink-0 overflow-hidden rounded-md">
                     <img
@@ -54,8 +54,8 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
                     />
                   </div>
                 )}
-                <div>
-                  <h3 className="text-foreground mb-1 text-lg leading-tight font-semibold">
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-foreground mb-1 line-clamp-2 text-lg leading-tight font-semibold">
                     {post.data.title}
                   </h3>
                   <div className="flex items-center gap-2">
@@ -71,7 +71,7 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
       </BlurFade>
 
       {/* Right: selected post detail */}
-      <div className="lg:col-span-2">
+      <div className="order-1 lg:order-2 lg:col-span-2">
         <BlurFade inView>
           <GlareHover
             width="100%"
@@ -89,11 +89,11 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
                   window.location.href = `/posts/${selected.id}/`;
                 }}
                 whileHover="hovered"
-                className="border-border/30 bg-card/90 hover:shadow-primary/10 flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border transition-shadow duration-300 hover:shadow-xl"
+                className="border-border/30 bg-card/90 hover:shadow-primary/10 flex h-72 cursor-pointer flex-col overflow-hidden rounded-3xl border transition-shadow duration-300 hover:shadow-xl"
               >
                 <div className="flex h-full flex-col overflow-hidden md:flex-row">
-                  <div className="flex flex-grow flex-col p-6 md:w-1/2">
-                    <h3 className="text-foreground mb-4 text-2xl leading-tight font-bold">
+                  <div className="flex h-full flex-col p-6 md:w-1/2">
+                    <h3 className="text-foreground mb-4 line-clamp-2 text-2xl leading-tight font-bold">
                       {selected.data.title}
                     </h3>
                     <p className="text-muted-foreground mb-4 line-clamp-4 text-lg">
