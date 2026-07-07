@@ -36,8 +36,8 @@ import AvatarCard from "./AvatarCard.tsx";
       </p>
     </BlurFade>
 
-    <BlurFade client:idle inView delay={0.2}>
-      <Magnet client:idle padding={100} disabled={false} magnetStrength={2}>
+    <BlurFade client:load inView delay={0.2}>
+      <Magnet client:load padding={100} disabled={false} magnetStrength={2}>
         <div class="pt-6">
           <a
             href="/about"
@@ -54,8 +54,8 @@ import AvatarCard from "./AvatarCard.tsx";
   <AvatarCard client:idle className="w-full md:w-1/2" />
 </section>
 
-<div class="-mt-5 w-full overflow-hidden">
-  <BlurFade client:load inView delay={0.25}>
+<div class="-mt-4">
+  <BlurFade client:visible inView delay={0.25}>
     <CurvedLoop
       client:visible
       marqueeText="air wish digital garden ✦"

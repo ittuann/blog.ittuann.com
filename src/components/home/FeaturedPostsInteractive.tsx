@@ -89,9 +89,9 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
                   window.location.href = `/posts/${selected.id}/`;
                 }}
                 whileHover="hovered"
-                className="border-border/30 bg-card/90 hover:shadow-primary/10 flex h-72 cursor-pointer flex-col overflow-hidden rounded-3xl border transition-shadow duration-300 hover:shadow-xl"
+                className="border-border/30 bg-card/90 hover:shadow-primary/10 flex h-132 cursor-pointer flex-col overflow-hidden rounded-3xl border transition-shadow duration-300 md:h-72 hover:shadow-xl"
               >
-                <div className="flex h-full flex-col overflow-hidden md:flex-row">
+                <div className="flex h-full flex-col md:flex-row">
                   <div className="flex h-full flex-col p-6 md:w-1/2">
                     <h3 className="text-foreground mb-4 line-clamp-2 text-2xl leading-tight font-bold">
                       {selected.data.title}
