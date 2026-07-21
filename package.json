@@ -34,7 +34,7 @@
     "@astrojs/mdx": "6.0.2",
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/react": "5.0.7",
-    "@astrojs/rss": "4.0.18",
+    "@astrojs/rss": "4.0.19",
     "@astrojs/sitemap": "3.7.3",
     "@fontsource-variable/noto-sans": "^5.2.10",
     "@tabler/icons-react": "^3.44.0",
