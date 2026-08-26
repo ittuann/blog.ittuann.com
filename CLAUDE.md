@@ -4,13 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Introduction
 
-This is a modern personal static blog website based on Astro 6 framework.
+This is a modern personal static blog website based on Astro 7 framework.
 
 This project was created by [@ittuann](https://github.com/ittuann) and released as open source under the AGPL-3.0 license in [the GitHub repository](https://github.com/ittuann/blog.ittuann.com).
 
 ## Tech Stack
 
-- Framework: Astro 6, with React 19 integration, TypeScript.
+- Framework: Astro 7, with React 19 integration, TypeScript.
 - Styling: Tailwind CSS 4
 - Components: shadcn/ui, Magic UI, React Bits
 - Animation: Motion
