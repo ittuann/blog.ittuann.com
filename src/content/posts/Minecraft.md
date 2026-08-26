@@ -189,8 +189,9 @@ Iris Shaders <https://modrinth.com/mod/iris> （替代 OptiFine）
 
 光影文件位置在`.minecraft/shaderpacks`文件夹中。
 
-- BSL Shaders - Original <https://modrinth.com/shader/bsl-shaders>
 - Complementary Shaders - Unbound <https://modrinth.com/shader/complementary-unbound>
+- Photon Shaders https://modrinth.com/shader/photon-shader
+- BSL Shaders https://modrinth.com/shader/bsl-shaders
 
 ## 可选材质包
 

@@ -22,10 +22,10 @@
   --primary-foreground: oklch(0.97 0.014 254.604);
   --secondary: #d5e4f8;
   --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.97 0.001 106.424);
+  --muted: oklch(0.9222 0.0013 286.3737);
   --muted-foreground: oklch(0.553 0.013 58.071);
-  --accent: oklch(0.97 0.001 106.424);
-  --accent-foreground: oklch(0.216 0.006 56.043);
+  --accent: oklch(0.9392 0.0166 250.8453);
+  --accent-foreground: oklch(0.6723 0.1606 244.9955);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1.0000 0 0);
   --border: oklch(0.923 0.003 48.717);

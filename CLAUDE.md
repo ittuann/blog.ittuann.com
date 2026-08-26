@@ -6,13 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a modern personal static blog website based on Astro 6 framework.
 
-This project was created by @ittuann and released as open source under the AGPL-3.0 license in [the GitHub repository](https://github.com/ittuann/blog.ittuann.com).
+This project was created by [@ittuann](https://github.com/ittuann) and released as open source under the AGPL-3.0 license in [the GitHub repository](https://github.com/ittuann/blog.ittuann.com).
 
 ## Tech Stack
 
 - Framework: Astro 6, with React 19 integration, TypeScript.
 - Styling: Tailwind CSS 4
-- Components: shadcn/ui, React Bits, Magic UI
+- Components: shadcn/ui, Magic UI, React Bits
 - Animation: Motion
 - State Management: Zustand
 - Icons: Tabler
@@ -27,10 +27,10 @@ The index landing page features motion-driven animations.
 ## Commands
 
 ```bash
-pnpm build        # Build production site to ./dist/
-pnpm check        # Astro check types
 pnpm dev          # Start local Astro dev server
-pnpm preview      # Preview build locally
+pnpm build        # Build production site to ./dist/
+pnpm check        # Run Astro check types
+pnpm preview      # Preview the build locally
 pnpm format       # Run Prettier formatting
 ```
 
@@ -39,7 +39,7 @@ pnpm format       # Run Prettier formatting
 - `src/components/ui/` — shadcn/ui components.
 - `src/components/home/` — homepage sections (e.g., Hero, Featured Posts, Recent Posts).
 - `src/pages/` — file-based routing.
-- `src/pages/posts/[...slug].astro` — handles post routes.
+- `src/pages/posts/[...slug].astro` — blog post route handler.
 - `src/content/posts/` — Markdown/MDX blog posts.
 - `src/assets/` — images used in Markdown/MDX blog posts.
 

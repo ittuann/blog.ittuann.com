@@ -1,6 +1,6 @@
 ---
-title: "Markdown Style Test"
-description: "Testing the Markdown syntax of the new blog framework."
+title: "Markdown Style Test for New Blog"
+description: "Testing the Markdown syntax for the new blog framework."
 pubDate: "2026-06-06"
 updatedDate: "2026-06-17"
 tags: ["Other"]
