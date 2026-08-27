@@ -24,6 +24,12 @@ The UI/UX design philosophy of this website emphasizes creativity and uniqueness
 
 The index landing page features motion-driven animations.
 
+Movement is smooth. Every interaction feels tactile and responsive, with micro-animations that provide satisfying feedback.
+
+Always aim to:
+- Ensure layouts are responsive and usable across devices.
+- Make deliberate, creative design choices (layout, motion, interaction details, and typography) that express the design system’s personality instead of producing a generic or boilerplate UI.
+
 ## Commands
 
 ```bash

@@ -68,7 +68,7 @@ export default function PostsList({ posts, heroImages }: Props) {
               "flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
               !selectedTag
                 ? "bg-primary text-card"
-                : "border-border text-foreground hover:bg-muted/60 border",
+                : "border-border text-foreground hover:bg-secondary/50 border",
             ].join(" ")}
           >
             All
@@ -92,7 +92,7 @@ export default function PostsList({ posts, heroImages }: Props) {
                 "flex cursor-pointer items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
                 selectedTag === tag
                   ? "bg-primary text-card"
-                  : "border-border text-foreground hover:bg-muted/60 border",
+                  : "border-border text-foreground hover:bg-secondary/50 border",
               ].join(" ")}
             >
               {tag}

@@ -89,7 +89,7 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
                   window.location.href = `/posts/${selected.id}/`;
                 }}
                 whileHover="hovered"
-                className="border-border/30 bg-card/90 hover:shadow-primary/10 flex h-132 cursor-pointer flex-col overflow-hidden rounded-3xl border transition-shadow duration-300 md:h-72 hover:shadow-xl"
+                className="border-border/30 bg-card/90 hover:shadow-primary/10 flex h-132 cursor-pointer flex-col overflow-hidden rounded-3xl border transition-shadow duration-300 hover:shadow-xl md:h-72"
               >
                 <div className="flex h-full flex-col md:flex-row">
                   <div className="flex h-full flex-col p-6 md:w-1/2">
@@ -140,7 +140,7 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
         <Pointer>
           <SpinningText
             reverse
-            className="text-accent-foreground/80 text-base"
+            className="text-secondary-foreground/80 text-base"
             duration={10}
             radius={5}
           >

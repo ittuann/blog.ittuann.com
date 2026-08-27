@@ -33,46 +33,42 @@ const heroImageSrcs: Record<string, string> = Object.fromEntries(
 );
 ---
 
-{
-  displayPosts.length > 0 && (
-    <section class="bg-secondary/25 relative overflow-hidden">
-      {/* DotField */}
-      <div class="absolute inset-0">
-        <DotField
-          client:visible
-          dotRadius={3.0}
-          dotSpacing={12}
-          bulgeStrength={90}
-          glowRadius={50}
-          sparkle={false}
-          waveAmplitude={2}
-          cursorRadius={900}
-          cursorForce={0.15}
-          bulgeOnly
-          gradientFrom="#A855F7"
-          gradientTo="#B497CF"
-          glowColor="#bedbff"
-        />
-      </div>
+<section class="bg-secondary/25 relative overflow-hidden">
+  {/* DotField */}
+  <div class="absolute inset-0">
+    <DotField
+      client:visible
+      dotRadius={3.0}
+      dotSpacing={12}
+      bulgeStrength={90}
+      glowRadius={50}
+      sparkle={false}
+      waveAmplitude={2}
+      cursorRadius={900}
+      cursorForce={0.15}
+      bulgeOnly
+      gradientFrom="#A855F7"
+      gradientTo="#B497CF"
+      glowColor="#bedbff"
+    />
+  </div>
 
-      {/* Title */}
-      <div class="relative mx-auto max-w-280 px-6 py-16">
-        <BlurFade client:idle inView direction="up">
-          <div class="mb-6">
-            <h2 class="text-foreground text-3xl font-bold">Featured Posts</h2>
-            <p class="text-muted-foreground mt-2 text-base">
-              Curated pieces from the archive.
-            </p>
-          </div>
-        </BlurFade>
-
-        {/* Featured Posts */}
-        <FeaturedPostsInteractive
-          client:idle
-          posts={displayPosts}
-          heroImageSrcs={heroImageSrcs}
-        />
+  {/* Title */}
+  <div class="relative mx-auto max-w-280 px-6 py-16">
+    <BlurFade client:idle inView direction="up">
+      <div class="mb-6">
+        <h2 class="text-foreground text-3xl font-bold">Featured Posts</h2>
+        <p class="text-muted-foreground mt-2 text-base">
+          Curated pieces from the archive.
+        </p>
       </div>
-    </section>
-  )
-}
+    </BlurFade>
+
+    {/* Featured Posts */}
+    <FeaturedPostsInteractive
+      client:idle
+      posts={displayPosts}
+      heroImageSrcs={heroImageSrcs}
+    />
+  </div>
+</section>

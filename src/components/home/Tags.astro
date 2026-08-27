@@ -3,7 +3,16 @@ import { getCollection } from "astro:content";
 import { BlurFade } from "@/components/ui/blur-fade";
 
 const posts = await getCollection("posts");
-const topics = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
+
+const tagCounts: Record<string, number> = {};
+for (const post of posts) {
+  for (const tag of post.data.tags) {
+    tagCounts[tag] = (tagCounts[tag] ?? 0) + 1;
+  }
+}
+const topics = Object.entries(tagCounts)
+  .sort(([a, countA], [b, countB]) => countB - countA || a.localeCompare(b))
+  .map(([tag]) => tag);
 ---
 
 {
@@ -14,11 +23,11 @@ const topics = [...new Set(posts.flatMap((post) => post.data.tags))].sort();
         <p class="text-muted-foreground mb-6 text-sm">
           Explore the archives by tag.
         </p>
-        <div class="flex flex-wrap gap-2">
+        <div class="flex flex-wrap gap-1.5">
           {topics.map((topic) => (
             <a
               href={`/posts?tag=${encodeURIComponent(topic)}`}
-              class="bg-secondary text-primary hover:bg-secondary/80 rounded-full px-4 py-2 text-[14px] font-semibold tracking-widest transition-colors"
+              class="bg-secondary text-primary hover:bg-secondary/80 rounded-full px-3.5 py-1.5 text-sm font-semibold transition-colors"
             >
               {topic}
             </a>
