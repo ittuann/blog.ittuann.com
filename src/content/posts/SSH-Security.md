@@ -90,8 +90,10 @@ sudo netstat -tunlp | grep 3322
 - 修改后重启 ssh 服务：
 
 ```shell
-sudo systemctl restart sshd
+sudo systemctl restart ssh
 # sshd / sshd.service / ssh 指向的都是同一个服务
+sudo systemctl restart ssh.socket
+# 新版 Ubuntu 使用 systemd socket 机制
 ```
 
 然后查看 SSH 侦听 (监听) 端口：
@@ -148,7 +150,7 @@ LoginGraceTime 20	#缩短单次的登录宽限期，即 ssh 登录必须完成�
 完成配置的修改后，重新加载 ssh 服务配置文件。
 
 ```shell
-sudo systemctl reload sshd
+sudo systemctl reload ssh
 ```
 
 ## 禁止其他认证方法
