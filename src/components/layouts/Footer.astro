@@ -1,99 +1,127 @@
 ---
 import { SparklesText } from "@/components/ui/sparkles-text.tsx";
+import FooterWaves from "./FooterWaves.tsx";
+import { IconBrandGithub, IconRss, IconMail } from "@tabler/icons-react";
 
 const today = new Date();
+
+const exploreLinks = [
+  { href: "/", label: "Home" },
+  { href: "/posts", label: "Blog" },
+  { href: "/about", label: "About" },
+];
+
+const resourceLinks = [
+  { href: "/rss.xml", label: "RSS Feed" },
+  { href: "https://github.com/ittuann", label: "GitHub" },
+  { href: "/", label: "Coop" },
+];
+
+const socialLinks = [
+  {
+    href: "https://github.com/ittuann",
+    label: "GitHub",
+    icon: IconBrandGithub,
+  },
+  { href: "/rss.xml", label: "RSS Feed", icon: IconRss },
+  { href: "mailto:ittuann@outlook.com", label: "Email", icon: IconMail },
+];
 ---
 
 <footer
-  class="border-border/20 bg-muted/60 mt-auto w-full rounded-t-4xl border-t"
+  class="border-border/20 bg-muted/60 relative mt-auto w-full overflow-hidden rounded-t-4xl border-t"
 >
-  <div class="mx-auto max-w-280 px-6 py-12">
+  {
+    /* Animated gradient-waves backdrop (WebGL, hydrated only when scrolled into view) */
+  }
+  <div class="absolute inset-0" aria-hidden="true">
+    <FooterWaves client:visible />
+  </div>
+
+  <div class="relative z-10 mx-auto max-w-280 px-6 pt-14 pb-6">
     {/* Top section */}
     <div class="flex flex-col justify-between gap-10 md:flex-row">
-      {/* Left: Logo + description */}
+      {/* Left: Logo + description + social */}
       <div class="flex max-w-72 flex-col gap-3">
         <a href="/" class="text-foreground flex items-center gap-2">
           <img src="/avatar-circle.webp" alt="logo" class="h-6 w-6" />
-          <SparklesText client:load className="text-xl font-bold"
+          <SparklesText client:visible className="text-xl font-bold"
             >air wish Blog</SparklesText
           >
         </a>
         <p class="text-muted-foreground text-sm leading-relaxed">
           air wish digital garden
         </p>
+        <div class="mt-1 flex items-center gap-2">
+          {
+            socialLinks.map(({ href, label, icon: Icon }) => (
+              <a
+                href={href}
+                target={href.startsWith("/") ? undefined : "_blank"}
+                rel="noreferrer"
+                aria-label={label}
+                title={label}
+                class="border-border/40 bg-background/50 text-muted-foreground hover:text-primary hover:border-primary/40 rounded-full border p-2 backdrop-blur-sm transition-colors"
+              >
+                <Icon size={16} stroke={1.5} />
+              </a>
+            ))
+          }
+        </div>
       </div>
 
       {/* Right: Link columns */}
       <div class="flex gap-16">
-        <div class="flex flex-col gap-3">
+        <nav class="flex flex-col gap-3" aria-label="Explore">
           <span
             class="text-muted-foreground text-xs font-semibold tracking-widest uppercase"
           >
             Explore
           </span>
-          <a
-            href="/"
-            class="text-muted-foreground text-sm transition-colors hover:underline"
-          >
-            Home
-          </a>
-          <a
-            href="/posts"
-            class="text-muted-foreground text-sm transition-colors hover:underline"
-          >
-            Blog
-          </a>
-          <a
-            href="/about"
-            class="text-muted-foreground text-sm transition-colors hover:underline"
-          >
-            About
-          </a>
-        </div>
+          {
+            exploreLinks.map(({ href, label }) => (
+              <a
+                href={href}
+                class="text-muted-foreground hover:text-primary text-sm transition-colors"
+              >
+                {label}
+              </a>
+            ))
+          }
+        </nav>
 
-        <div class="flex flex-col gap-3">
+        <nav class="flex flex-col gap-3" aria-label="Links">
           <span
             class="text-muted-foreground text-xs font-semibold tracking-widest uppercase"
           >
             Links
           </span>
-          <a
-            href="/rss.xml"
-            target="_blank"
-            class="text-muted-foreground text-sm transition-colors hover:underline"
-          >
-            RSS Feed
-          </a>
-          <a
-            href="https://github.com/ittuann"
-            target="_blank"
-            class="text-muted-foreground text-sm transition-colors hover:underline"
-          >
-            GitHub
-          </a>
-          {/* href="/cooperation" */}
-          <a
-            href="/"
-            class="text-muted-foreground text-sm transition-colors hover:underline"
-          >
-            Coop
-          </a>
-        </div>
+          {
+            resourceLinks.map(({ href, label }) => (
+              <a
+                href={href}
+                target={href.startsWith("/") ? undefined : "_blank"}
+                rel="noreferrer"
+                class="text-muted-foreground hover:text-primary text-sm transition-colors"
+              >
+                {label}
+              </a>
+            ))
+          }
+        </nav>
       </div>
     </div>
 
-    {/* Divider */}
-    <div class="border-border my-8 border-t"></div>
-
-    {/* Bottom section */}
+    {/* Bottom bar: frosted glass floating over the wave crests */}
     <div
-      class="flex flex-col items-start justify-between gap-3 md:flex-row md:items-center"
+      class="border-border/40 bg-background/60 mt-12 flex flex-col items-start justify-between gap-3 rounded-2xl border px-5 py-3 backdrop-blur-md md:flex-row md:items-center"
     >
       <p class="text-muted-foreground text-sm">
-        Created with <span class="text-primary">♥</span> by
+        Created with <span class="text-primary">♥</span> by {" "}
         <a
           href="https://github.com/ittuann"
           target="_blank"
+          rel="noreferrer"
           class="text-foreground font-semibold hover:underline"
         >
           air wish
