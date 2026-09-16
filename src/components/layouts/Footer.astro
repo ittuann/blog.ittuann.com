@@ -1,7 +1,8 @@
 ---
-import { SparklesText } from "@/components/ui/sparkles-text.tsx";
-import FooterWaves from "./FooterWaves.tsx";
 import { IconBrandGithub, IconRss, IconMail } from "@tabler/icons-react";
+import { SparklesText } from "@/components/ui/sparkles-text.tsx";
+import avatarImg from "@/assets/avatar-circle.webp";
+import FooterWaves from "./FooterWaves.tsx";
 
 const today = new Date();
 
@@ -42,7 +43,7 @@ const socialLinks = [
           {/* Left: Logo + description + social */}
           <div class="flex max-w-72 flex-col gap-3">
             <a href="/" class="text-foreground flex items-center gap-2">
-              <img src="/avatar-circle.webp" alt="logo" class="h-6 w-6" />
+              <img src={avatarImg.src} alt="logo" class="h-6 w-6" />
               <SparklesText client:visible className="text-xl font-bold"
                 >air wish Blog</SparklesText
               >

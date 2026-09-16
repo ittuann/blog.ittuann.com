@@ -144,7 +144,7 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
             duration={10}
             radius={5}
           >
-            DISCOVER • OPEN • EXPLORE •
+             DISCOVER * OPEN * EXPLORE *
           </SpinningText>
         </Pointer>
       </div>

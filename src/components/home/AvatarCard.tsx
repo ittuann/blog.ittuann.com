@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import avatarImg from "@/assets/avatar.webp";
 
 export function AvatarCard({ className }: { className?: string }) {
   return (
@@ -58,7 +59,7 @@ export function AvatarCard({ className }: { className?: string }) {
           transition={{ type: "spring", stiffness: 300 }}
         >
           <img
-            src="/avatar.webp"
+            src={avatarImg.src}
             alt="air wish avatar"
             width={320}
             height={320}
