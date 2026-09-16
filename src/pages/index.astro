@@ -1,11 +1,11 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../components/layouts/Layout.astro";
-import Hero from "../components/home/Hero.astro";
-import FeaturedPosts from "../components/home/FeaturedPosts.astro";
-import RecentPosts from "../components/home/RecentPosts.astro";
-import Tags from "../components/home/Tags.astro";
-import { BackgroundMatrix } from "../components/BackgroundMatrix.tsx";
+import Layout from "@/components/layouts/Layout.astro";
+import Hero from "@/components/home/Hero.astro";
+import FeaturedPosts from "@/components/home/FeaturedPosts.astro";
+import RecentPosts from "@/components/home/RecentPosts.astro";
+import Tags from "@/components/home/Tags.astro";
+import { BackgroundMatrix } from "@/components/BackgroundMatrix.tsx";
 
 const posts = (await getCollection("posts")).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
