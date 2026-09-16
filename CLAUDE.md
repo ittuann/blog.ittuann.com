@@ -10,7 +10,7 @@ This project was created by [@ittuann](https://github.com/ittuann) and released 
 
 ## Tech Stack
 
-- Framework: Astro 7, with React 19 integration, TypeScript.
+- Framework: Astro 7, with React integration, TypeScript.
 - Styling: Tailwind CSS 4
 - Components: shadcn/ui, Magic UI, React Bits
 - Animation: Motion
