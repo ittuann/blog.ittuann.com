@@ -195,6 +195,12 @@ sudo ufw status verbose
 
 UFW 默认情况下允许所有的出站连接，拒绝所有的入站连接。
 
+配置开放 SSH 端口：
+
+```shell
+sudo ufw allow OpenSSH
+```
+
 开启 UFW：
 
 ```shell
@@ -210,12 +216,12 @@ sudo ufw logging low 	# low|medium|high
 
 日志文件在`/var/log/ufw.log`
 
-在防火墙开放 SSH 端口：
+在防火墙开放指定端口：
 
 ```shell
-sudo ufw allow 3322/tcp
+sudo ufw allow 3322/tcp # SSH 修改后的端口号
 # 一般还会添加网页服务端口
-sudo ufw allow 443  # 同时允许 TCP 和 UDP 协议
+sudo ufw allow 443      # 同时允许 TCP 和 UDP 协议
 ```
 
 UFW 删除规则：
@@ -327,6 +333,12 @@ https://www.gingerdoc.com/tutorials/how-to-set-up-multi-factor-authentication-fo
 
 参考链接：
 
+> [Initial Server Setup on Ubuntu 20.04 - DigitalOcean](https://www.digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-20-04#step-4-setting-up-a-basic-firewall)
+>
+> [How To Harden OpenSSH on Ubuntu 20.04 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-harden-openssh-on-ubuntu-20-04)
+>
+> [How To Harden OpenSSH Client on Ubuntu 20.04 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-harden-openssh-client-on-ubuntu-20-04)
+
 > [ubuntu 16.04 防止 SSH 暴力登录攻击](https://www.mobibrw.com/2018/11231)
 >
 > [Linux 实用工具总结之 UFW](https://notes.maxwi.com/2017/01/19/linux-command-tools-ufw/)
@@ -334,7 +346,3 @@ https://www.gingerdoc.com/tutorials/how-to-set-up-multi-factor-authentication-fo
 > [UFW Essentials: Common Firewall Rules and Commands - DigitalOcean](https://www.digitalocean.com/community/tutorials/ufw-essentials-common-firewall-rules-and-commands)
 >
 > [如何使用 fail2ban 防御 SSH 服务器的暴力破解攻击](https://linux.cn/article-5067-1.html)
->
-> [How To Harden OpenSSH on Ubuntu 20.04 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-harden-openssh-on-ubuntu-20-04)
->
-> [How To Harden OpenSSH Client on Ubuntu 20.04 - DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-harden-openssh-client-on-ubuntu-20-04)

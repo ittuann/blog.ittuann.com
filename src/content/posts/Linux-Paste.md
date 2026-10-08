@@ -8,6 +8,8 @@ category: ["Tech"]
 
 环境为 Ubuntu 22.04 LTS
 
+默认终端快捷键： Ctrl + Shift + C（复制）、 Ctrl + Shift + V（粘贴）
+
 # Vim
 
 vim 的剪贴板功能是寄存器 (register)，和系统剪贴板 (system clipboard) 不是一个东西。

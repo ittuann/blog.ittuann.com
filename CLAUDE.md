@@ -49,12 +49,29 @@ pnpm format       # Run Prettier formatting
 - `src/content/posts/` — Markdown/MDX blog posts.
 - `src/assets/` — images used in Markdown/MDX blog posts.
 
-## Styling
+## UI Styling
 
-Uses **Tailwind CSS 4**.
+Use **Tailwind CSS 4**.
 
-Only use `shadcn/ui` CSS color variables in `src/styles/global.css`. Do not add external or custom color palettes.
-Always use predefined variables and utility classes (e.g., radius-xl, text-lg, shadow-md, etc.), to maintain UI consistency. Avoid hardcoded absolute pixel values.
+Only use `shadcn/ui` CSS variables in `src/styles/global.css`. Match the nearest ***shadcn primitive**, do not add external or custom color palettes.
+Always use predefined color variables (e.g., primary, primary-foreground, etc.) and utility classes (e.g., radius-xl, text-lg, shadow-md, etc.), to maintain UI consistency.
+Never hardcoded hex value colors or absolute pixel values.
+
+Most color variables come in pairs: a surface and a foreground that meets contrast on it, and always use them together.
+
+| Role                                     | Use it for                                                  | Don't use it for                                    |
+| ---------------------------------------- | ----------------------------------------------------------- | --------------------------------------------------- |
+| `background` / `foreground`              | App canvas, default text                                    | Cards, popovers, sidebar (have their own)           |
+| `card` / `card-foreground`               | Panels lifted off the canvas                                | The canvas itself                                   |
+| `popover` / `popover-foreground`         | Floating menus, dropdowns, hovercards                       | Inline UI                                           |
+| `primary` / `primary-foreground`         | The single affirmative action in a flow (Save, Confirm)     | Decorative accents; hover states; secondary actions |
+| `secondary` / `secondary-foreground`     | Lower-emphasis actions next to a primary                    | The affirmative action                              |
+| `muted` / `muted-foreground`             | De-emphasized text, captions, placeholders, disabled chrome | Body copy; primary actions                          |
+| `accent` / `accent-foreground`           | Hover/active backgrounds for ghost buttons and list rows    | Solid filled buttons (use `secondary` instead)      |
+| `destructive` / `destructive-foreground` | Delete, discard, irreversible-action buttons; error states  | Cancel buttons (Cancel is not destructive)          |
+| `border`                                 | All hairlines: dividers, input outlines, card edges         | Heavy emphasis; that's `ring`                       |
+| `input`                                  | Form field background only                                  | Anywhere outside form fields                        |
+| `ring`                                   | Focus-visible outlines, active selection halos              | Persistent decoration                               |
 
 The `@theme` directive in `global.css`. No `tailwind.config.*` file.
 
@@ -62,11 +79,13 @@ Dark mode is toggled via the `.dark`, stored in `localStorage`.
 
 ## Component Conventions
 
-- shadcn components are configured via `components.json`. With additional registries magicui and react-bits.
-- Path alias `@/*` resolves to `src/*`.
+- React components use `.tsx`. Astro components use `.astro`. React components are hydrated via `client:idle` or `client:visible`.
 
-- `.astro` components for layout and static rendering.
-- `.tsx` React components for interactivity (e.g., `ThemeToggle.tsx`).
+- `.astro` Astro components for layout and static rendering.
+- `.tsx` React components for interactivity.
+
+- shadcn components are configured via `components.json`. With additional registries Magic UI and React Bits.
+- Path alias `@/components` resolves to `src/components`.
 
 - Animations use the `motion/react` library.
 - Client-side state uses `zustand` (`create` from `zustand`). Co-locate the store in the component file when the state is local to one component; create a dedicated `src/store/` file only when state is shared across multiple components.
