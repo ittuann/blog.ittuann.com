@@ -8,7 +8,7 @@ category: ["Tech"]
 
 环境为 Ubuntu 22.04 LTS
 
-默认终端快捷键： Ctrl + Shift + C（复制）、 Ctrl + Shift + V（粘贴）
+默认终端快捷键：Ctrl + Shift + C（复制）、Ctrl + Shift + V（粘贴）
 
 # Vim
 

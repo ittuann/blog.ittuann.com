@@ -3,6 +3,12 @@ import { Image } from "astro:assets";
 import type { CollectionEntry } from "astro:content";
 import FormattedDate from "@/components/FormattedDate.astro";
 import Layout from "@/components/layouts/Layout.astro";
+import {
+  IconFolder,
+  IconTags,
+  IconCalendar,
+  IconCalendarClock,
+} from "@tabler/icons-react";
 
 type Props = CollectionEntry<"posts">["data"];
 
@@ -20,6 +26,82 @@ const {
 <Layout title={`${title} | air wish`} description={description}>
   <main class="mx-auto w-[calc(100%-2em)] max-w-full">
     <article>
+      {/* frontmatter */}
+      <div
+        class="prose dark:prose-invert prose-a:text-primary prose-a:break-words mx-auto w-180 max-w-[calc(100%-2em)] px-4 pt-4"
+      >
+        <div class="py-4 text-left leading-none">
+          {/* title */}
+          <h1 class="mb-2 text-5xl leading-tight">{title}</h1>
+          {/* description */}
+          <p class="text-muted-foreground mb-2 text-2xl tracking-tight">
+            {description}
+          </p>
+          {/* category, tags */}
+          {
+            (category.length > 0 || tags.length > 0) && (
+              <div class="mb-2 flex flex-wrap items-center gap-x-4 gap-y-2">
+                {category.length > 0 && (
+                  <div
+                    class="text-muted-foreground flex items-center gap-2 text-sm tracking-tight"
+                    title="Category"
+                  >
+                    <IconFolder
+                      className="size-4 shrink-0"
+                      stroke={2}
+                      aria-label="Category"
+                    />
+                    <span>{category.join(" · ")}</span>
+                  </div>
+                )}
+                {tags.length > 0 && (
+                  <div class="flex flex-wrap items-center gap-2">
+                    <IconTags
+                      className="text-muted-foreground size-4 shrink-0"
+                      stroke={2}
+                      aria-label="Tags"
+                    />
+                    {tags.map((tag) => (
+                      <a
+                        href={`/posts?tag=${encodeURIComponent(tag)}`}
+                        class="text-primary hover:bg-secondary/80 rounded-full px-3 py-1 font-semibold no-underline transition-colors"
+                      >
+                        {tag}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )
+          }
+          {/* data */}
+          <div
+            class="text-muted-foreground mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm italic"
+          >
+            <span class="flex items-center gap-1.5" title="Published">
+              <IconCalendar
+                className="size-4 shrink-0"
+                stroke={2}
+                aria-label="Published"
+              />
+              <FormattedDate date={pubDate} />
+            </span>
+            {
+              updatedDate && (
+                <span class="flex items-center gap-1.5" title="Last updated">
+                  <IconCalendarClock
+                    className="size-4 shrink-0"
+                    stroke={2}
+                    aria-label="Last updated"
+                  />
+                  <FormattedDate date={updatedDate} />
+                </span>
+              )
+            }
+          </div>
+        </div>
+      </div>
+
       {/* heroImage */}
       <div class="w-full">
         {
@@ -35,55 +117,11 @@ const {
         }
       </div>
 
+      {/* content */}
       <div
         class="prose dark:prose-invert prose-a:text-primary prose-a:break-words prose-blockquote:border-l-primary mx-auto w-180 max-w-[calc(100%-2em)] p-4"
       >
-        {/* frontmatter */}
-        <div class="mb-4 py-4 text-center leading-none">
-          {/* title */}
-          <h1 class="mb-2 text-5xl leading-tight">{title}</h1>
-          {/* description */}
-          <p class="text-muted-foreground mb-2 text-lg tracking-tight">
-            {description}
-          </p>
-          {/* category, tags */}
-          {
-            category.length > 0 && (
-              <div class="text-muted-foreground mb-2 text-sm tracking-tight">
-                {category.join(" · ")}
-              </div>
-            )
-          }
-          {
-            tags.length > 0 && (
-              <div class="mb-2 flex flex-wrap justify-center gap-2">
-                {tags.map((tag) => (
-                  <a
-                    href={`/posts?tag=${encodeURIComponent(tag)}`}
-                    class="bg-secondary text-primary hover:bg-secondary/80 rounded-full px-3 py-1 font-semibold tracking-widest no-underline transition-colors"
-                  >
-                    {tag}
-                  </a>
-                ))}
-              </div>
-            )
-          }
-          {/* data */}
-          <div class="text-muted-foreground mb-2 italic">
-            <span>
-              Published on <FormattedDate date={pubDate} />
-            </span>
-            {
-              updatedDate && (
-                <span>
-                  , Last updated on <FormattedDate date={updatedDate} />
-                </span>
-              )
-            }
-          </div>
-          <hr class="border-border" />
-        </div>
-
+        <hr class="border-border" />
         <slot />
       </div>
     </article>
