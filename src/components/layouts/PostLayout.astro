@@ -12,19 +12,13 @@ import {
 
 type Props = CollectionEntry<"posts">["data"];
 
-const {
-  title,
-  description,
-  pubDate,
-  updatedDate,
-  heroImage,
-  tags,
-  category,
-} = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags, category } =
+  Astro.props;
 ---
 
 <Layout title={`${title} | air wish`} description={description}>
-  <main class="mx-auto max-w-252 px-6">
+  <main class="mx-auto max-w-248 px-4">
+    {/* (248 - 4*2) = 240 = 960px = 1080p(1920x1080) / 2 */}
     <article>
       {/* frontmatter */}
       <div
@@ -58,14 +52,16 @@ const {
                   stroke={2}
                   aria-label="Tags"
                 />
-                {tags.map((tag) => (
-                  <a
-                    href={`/posts?tag=${encodeURIComponent(tag)}`}
-                    class="text-primary hover:bg-secondary/80 rounded-full px-2 py-1 font-semibold no-underline transition-colors"
-                  >
-                    {tag}
-                  </a>
-                ))}
+                {
+                  tags.map((tag) => (
+                    <a
+                      href={`/posts?tag=${encodeURIComponent(tag)}`}
+                      class="text-primary hover:bg-secondary/80 rounded-full px-2 py-1 font-semibold no-underline transition-colors"
+                    >
+                      {tag}
+                    </a>
+                  ))
+                }
               </div>
             </div>
 
