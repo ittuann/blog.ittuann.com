@@ -18,100 +18,103 @@ const {
   pubDate,
   updatedDate,
   heroImage,
-  tags = [],
-  category = [],
+  tags,
+  category,
 } = Astro.props;
 ---
 
 <Layout title={`${title} | air wish`} description={description}>
-  <main class="mx-auto w-[calc(100%-2em)] max-w-full">
+  <main class="mx-auto max-w-252 px-6">
     <article>
       {/* frontmatter */}
       <div
-        class="prose dark:prose-invert prose-a:text-primary prose-a:break-words mx-auto w-180 max-w-[calc(100%-2em)] px-4 pt-4"
+        class="prose dark:prose-invert prose-a:text-primary prose-a:break-words max-w-none pt-4"
       >
-        <div class="py-4 text-left leading-none">
+        <div class="text-left leading-none">
           {/* title */}
-          <h1 class="mb-2 text-5xl leading-tight">{title}</h1>
+          <h1 class="mb-1 text-4xl leading-tight">{title}</h1>
           {/* description */}
-          <p class="text-muted-foreground mb-2 text-2xl tracking-tight">
+          <p class="text-muted-foreground mt-0 mb-3 text-2xl tracking-tight">
             {description}
           </p>
-          {/* category, tags */}
-          {
-            (category.length > 0 || tags.length > 0) && (
-              <div class="mb-2 flex flex-wrap items-center gap-x-4 gap-y-2">
-                {category.length > 0 && (
-                  <div
-                    class="text-muted-foreground flex items-center gap-2 text-sm tracking-tight"
-                    title="Category"
+          {/* meta row: category + tags / dates */}
+          <div class="mb-1 flex flex-wrap items-center gap-x-3 gap-y-2">
+            {/* category, tags */}
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+              <div
+                class="text-muted-foreground flex items-center gap-2 text-sm tracking-tight"
+                title="Category"
+              >
+                <IconFolder
+                  className="size-4 shrink-0"
+                  stroke={2}
+                  aria-label="Category"
+                />
+                <span>{category.join(" · ")}</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-2">
+                <IconTags
+                  className="text-muted-foreground size-4 shrink-0"
+                  stroke={2}
+                  aria-label="Tags"
+                />
+                {tags.map((tag) => (
+                  <a
+                    href={`/posts?tag=${encodeURIComponent(tag)}`}
+                    class="text-primary hover:bg-secondary/80 rounded-full px-2 py-1 font-semibold no-underline transition-colors"
                   >
-                    <IconFolder
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <span
+              aria-hidden="true"
+              class="text-muted-foreground/40 hidden text-xl leading-none font-light select-none sm:inline"
+            >
+              /
+            </span>
+            {/* dates */}
+            <div
+              class="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-sm italic"
+            >
+              <span class="flex items-center gap-1.5" title="Published">
+                <IconCalendar
+                  className="size-4 shrink-0"
+                  stroke={2}
+                  aria-label="Published"
+                />
+                <FormattedDate date={pubDate} />
+              </span>
+              {
+                updatedDate && (
+                  <span class="flex items-center gap-1.5" title="Last updated">
+                    <IconCalendarClock
                       className="size-4 shrink-0"
                       stroke={2}
-                      aria-label="Category"
+                      aria-label="Last updated"
                     />
-                    <span>{category.join(" · ")}</span>
-                  </div>
-                )}
-                {tags.length > 0 && (
-                  <div class="flex flex-wrap items-center gap-2">
-                    <IconTags
-                      className="text-muted-foreground size-4 shrink-0"
-                      stroke={2}
-                      aria-label="Tags"
-                    />
-                    {tags.map((tag) => (
-                      <a
-                        href={`/posts?tag=${encodeURIComponent(tag)}`}
-                        class="text-primary hover:bg-secondary/80 rounded-full px-3 py-1 font-semibold no-underline transition-colors"
-                      >
-                        {tag}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )
-          }
-          {/* data */}
-          <div
-            class="text-muted-foreground mb-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm italic"
-          >
-            <span class="flex items-center gap-1.5" title="Published">
-              <IconCalendar
-                className="size-4 shrink-0"
-                stroke={2}
-                aria-label="Published"
-              />
-              <FormattedDate date={pubDate} />
-            </span>
-            {
-              updatedDate && (
-                <span class="flex items-center gap-1.5" title="Last updated">
-                  <IconCalendarClock
-                    className="size-4 shrink-0"
-                    stroke={2}
-                    aria-label="Last updated"
-                  />
-                  <FormattedDate date={updatedDate} />
-                </span>
-              )
-            }
+                    <FormattedDate date={updatedDate} />
+                  </span>
+                )
+              }
+            </div>
           </div>
         </div>
       </div>
 
-      {/* heroImage */}
+      {/* heroImage: 960x540 = 1080p(1920x1080) / 2 */}
       <div class="w-full">
         {
           heroImage && (
             <Image
-              width={640}
-              height={360}
+              width={960}
+              height={540}
+              densities={[1, 2]}
               src={heroImage}
               alt="Post hero image"
-              class="mx-auto block rounded-xl shadow-lg"
+              class="mx-auto block h-auto w-full rounded-xl shadow-lg"
             />
           )
         }
@@ -119,9 +122,9 @@ const {
 
       {/* content */}
       <div
-        class="prose dark:prose-invert prose-a:text-primary prose-a:break-words prose-blockquote:border-l-primary mx-auto w-180 max-w-[calc(100%-2em)] p-4"
+        class="prose dark:prose-invert prose-a:text-primary prose-a:break-words prose-blockquote:border-l-primary max-w-none py-4"
       >
-        <hr class="border-border" />
+        <hr class="border-border mb-4" />
         <slot />
       </div>
     </article>
