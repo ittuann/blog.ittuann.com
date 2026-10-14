@@ -1,0 +1,163 @@
+"""Subset Sarasa Mono SC into unicode-range woff2 slices for the blog.
+
+Usage:
+    pip install fonttools brotli
+    python scripts/build-sarasa-mono-sc.py <dir with sarasa-mono-sc-{regular,bold}.ttf>
+
+The TTFs come from the `@fontpkg/sarasa-mono-sc` npm package (or the official
+Sarasa Gothic release). Output goes to src/assets/fonts/sarasa-mono-sc/ together
+with variants.mjs, which astro.config.mjs feeds to the local font provider.
+Sarasa Gothic is licensed under SIL OFL 1.1.
+"""
+
+import json
+import sys
+from multiprocessing import Pool
+from pathlib import Path
+
+from fontTools import subset
+from fontTools.ttLib import TTFont
+
+ROOT = Path(__file__).resolve().parent.parent
+OUT_DIR = ROOT / "src" / "assets" / "fonts" / "sarasa-mono-sc"
+WEIGHTS = {400: "regular", 700: "bold"}
+
+# Han characters are sliced by how common they are, so a typical page only
+# pulls the first few slices.
+HAN_RANGES = [(0x3400, 0x4DBF), (0x4E00, 0x9FFF), (0xF900, 0xFAFF), (0x20000, 0x3FFFF)]
+# Hangul syllables and private use areas are never needed by the blog.
+SKIP_RANGES = [(0xAC00, 0xD7AF), (0xE000, 0xF8FF), (0xF0000, 0x10FFFF)]
+
+
+def in_ranges(cp, ranges):
+    return any(lo <= cp <= hi for lo, hi in ranges)
+
+
+def decode_range(codec, lead_lo, lead_hi, trail_lo, trail_hi):
+    """Return decodable characters of a double-byte codec, in byte order."""
+    chars = []
+    for lead in range(lead_lo, lead_hi + 1):
+        for trail in range(trail_lo, trail_hi + 1):
+            try:
+                text = bytes([lead, trail]).decode(codec)
+            except UnicodeDecodeError:
+                continue
+            if len(text) == 1:
+                chars.append(ord(text))
+    return chars
+
+
+def chunk(items, size):
+    return [items[i : i + size] for i in range(0, len(items), size)]
+
+
+def build_slices(cmap):
+    """Map slice name -> sorted codepoints, restricted to what the font has."""
+    available = set(cmap)
+    taken = set()
+    slices = {}
+
+    def add(name, cps):
+        cps = sorted({cp for cp in cps if cp in available and cp not in taken})
+        if cps:
+            slices[name] = cps
+            taken.update(cps)
+
+    non_han = [
+        cp
+        for cp in available
+        if not in_ranges(cp, HAN_RANGES) and not in_ranges(cp, SKIP_RANGES)
+    ]
+    add("latin", [cp for cp in non_han if cp < 0x250 or 0x2000 <= cp <= 0x206F])
+    add("symbols", [cp for cp in non_han if cp < 0x370 or 0x2000 <= cp <= 0x2BFF])
+    add("cjk-punct", [cp for cp in non_han if 0x3000 <= cp <= 0x303F or 0xFF00 <= cp <= 0xFFEF])
+    add("cjk-symbols", [cp for cp in non_han if 0x2E80 <= cp <= 0x33FF or cp >= 0xFE00])
+    add("misc", non_han)
+
+    gb_l1 = decode_range("gb2312", 0xB0, 0xD7, 0xA1, 0xFE)
+    gb_l2 = decode_range("gb2312", 0xD8, 0xF7, 0xA1, 0xFE)
+    big5_l1 = decode_range("big5", 0xA4, 0xC6, 0x40, 0xFE)
+
+    for i, part in enumerate(chunk(gb_l1, 480)):
+        add(f"han-l1-{i}", part)
+    for i, part in enumerate(chunk(gb_l2, 1000)):
+        add(f"han-l2-{i}", part)
+    for i, part in enumerate(chunk(big5_l1, 1000)):
+        add(f"han-tc-{i}", part)
+    return slices
+
+
+def to_unicode_range(cps):
+    """Collapse codepoints into CSS unicode-range tokens."""
+    tokens = []
+    start = prev = cps[0]
+    for cp in cps[1:] + [None]:
+        if cp is not None and cp == prev + 1:
+            prev = cp
+            continue
+        tokens.append(f"U+{start:X}" if start == prev else f"U+{start:X}-{prev:X}")
+        if cp is not None:
+            start = prev = cp
+    return tokens
+
+
+def subset_one(job):
+    src, dst, cps = job
+    options = subset.Options()
+    options.flavor = "woff2"
+    options.hinting = False
+    options.notdef_outline = True
+    options.glyph_names = False
+    options.name_IDs = [0, 1, 2, 3, 4, 5, 6, 7, 13, 14]
+    font = TTFont(src, lazy=True)
+    subsetter = subset.Subsetter(options)
+    subsetter.populate(unicodes=cps)
+    subsetter.subset(font)
+    subset.save_font(font, dst, options)
+    font.close()
+    return dst.name, dst.stat().st_size
+
+
+def main():
+    if len(sys.argv) != 2:
+        sys.exit(__doc__)
+    src_dir = Path(sys.argv[1])
+    OUT_DIR.mkdir(parents=True, exist_ok=True)
+
+    probe = TTFont(src_dir / f"sarasa-mono-sc-{WEIGHTS[400]}.ttf", lazy=True)
+    slices = build_slices(probe.getBestCmap())
+    probe.close()
+
+    jobs, variants = [], []
+    for weight, style in WEIGHTS.items():
+        for name, cps in slices.items():
+            file_name = f"sarasa-mono-sc-{weight}-{name}.woff2"
+            jobs.append((src_dir / f"sarasa-mono-sc-{style}.ttf", OUT_DIR / file_name, cps))
+            variants.append((weight, file_name, to_unicode_range(cps)))
+
+    with Pool(4) as pool:
+        total = 0
+        for file_name, size in pool.imap_unordered(subset_one, jobs):
+            total += size
+            print(f"{file_name}: {size / 1024:.1f} KiB", flush=True)
+    print(f"total: {total / 1024 / 1024:.2f} MiB")
+
+    lines = [
+        "// Generated by scripts/build-sarasa-mono-sc.py, do not edit.",
+        '/** @typedef {{ weight: number, style: "normal", src: [string], unicodeRange: [string, ...string[]] }} Variant */',
+        "/** @type {[Variant, ...Variant[]]} */",
+        "export default [",
+    ]
+    for weight, file_name, ranges in variants:
+        lines.append("  {")
+        lines.append(f"    weight: {weight},")
+        lines.append('    style: "normal",')
+        lines.append(f'    src: ["./src/assets/fonts/sarasa-mono-sc/{file_name}"],')
+        lines.append(f"    unicodeRange: {json.dumps(ranges)},")
+        lines.append("  },")
+    lines.append("];")
+    (OUT_DIR / "variants.mjs").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+
+if __name__ == "__main__":
+    main()

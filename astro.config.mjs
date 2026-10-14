@@ -11,6 +11,8 @@ import tailwindcss from "@tailwindcss/vite";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
+import sarasaMonoVariants from "./src/assets/fonts/sarasa-mono-sc/variants.mjs";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://blog.ittuann.com",
@@ -38,20 +40,12 @@ export default defineConfig({
   },
   fonts: [
     {
-      provider: fontProviders.google(),
-      name: "Noto Sans Mono",
-      cssVariable: "--font-noto-mono",
+      // Self-hosted local unicode-range slices, see scripts/build-sarasa-mono-sc.py
+      provider: fontProviders.local(),
+      name: "Sarasa Mono SC",
+      cssVariable: "--font-sarasa-mono",
       fallbacks: ["monospace"],
-      weights: [400, 700],
-      styles: ["normal"],
-    },
-    {
-      provider: fontProviders.google(),
-      name: "Noto Sans SC",
-      cssVariable: "--font-noto-sc",
-      fallbacks: ["sans-serif"],
-      weights: [400, 700],
-      styles: ["normal"],
+      options: { variants: sarasaMonoVariants },
     },
   ],
 });

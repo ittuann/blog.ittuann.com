@@ -2,7 +2,6 @@
 @plugin "@tailwindcss/typography";
 @import "shadcn/tailwind.css";
 @import "tw-animate-css";
-@import "@fontsource-variable/noto-sans";
 
 /* Math support */
 @import "katex/dist/katex.min.css";
@@ -64,9 +63,9 @@
   --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
 
-  --font-mono: var(--font-noto-mono), var(--font-noto-sc), monospace;
-  --font-sans: var(--font-noto-sc), sans-serif;
-  --font-serif: serif;
+  --font-mono: var(--font-sarasa-mono), monospace;
+  --font-sans: var(--font-sarasa-mono), monospace;
+  --font-serif: var(--font-sarasa-mono), monospace;
 }
 
 @theme inline {
@@ -178,9 +177,9 @@
   --shadow-xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00), 0px 8px 10px -1px hsl(202.8169 89.1213% 53.1373% / 0.00);
   --shadow-2xl: 0px 2px 0px 0px hsl(202.8169 89.1213% 53.1373% / 0.00);
 
-  --font-mono: var(--font-noto-mono), var(--font-noto-sc), monospace;
-  --font-sans: var(--font-noto-sc), sans-serif;
-  --font-serif: serif;
+  --font-mono: var(--font-sarasa-mono), monospace;
+  --font-sans: var(--font-sarasa-mono), monospace;
+  --font-serif: var(--font-sarasa-mono), monospace;
 }
 
 @layer base {

@@ -12,13 +12,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-
 # environment variables
 .env
 .env.production
 
-# macOS-specific files
-.DS_Store
+# Python scripts
+.mypy_cache/
 
 # jetbrains setting folder
 .idea/
+
+# macOS-specific files
+.DS_Store

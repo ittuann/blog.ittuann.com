@@ -28,7 +28,9 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
           {/* title */}
           <h1 class="mb-1 text-4xl leading-tight">{title}</h1>
           {/* description */}
-          <p class="text-muted-foreground mt-0 mb-3 text-2xl tracking-tight">
+          <p
+            class="text-secondary-foreground mt-0 mb-3 text-2xl tracking-tight"
+          >
             {description}
           </p>
           {/* meta row: category + tags / dates */}
@@ -36,7 +38,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
             {/* category, tags */}
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
               <div
-                class="text-muted-foreground flex items-center gap-2 text-sm tracking-tight"
+                class="text-secondary-foreground flex items-center gap-2 text-sm tracking-tight"
                 title="Category"
               >
                 <IconFolder
@@ -48,7 +50,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
               </div>
               <div class="flex flex-wrap items-center gap-2">
                 <IconTags
-                  className="text-muted-foreground size-4 shrink-0"
+                  className="text-secondary-foreground size-4 shrink-0"
                   stroke={2}
                   aria-label="Tags"
                 />
@@ -67,13 +69,13 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
 
             <span
               aria-hidden="true"
-              class="text-muted-foreground/40 hidden text-xl leading-none font-light select-none sm:inline"
+              class="text-secondary-foreground/40 hidden text-xl leading-none font-light select-none sm:inline"
             >
               /
             </span>
             {/* dates */}
             <div
-              class="text-muted-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-sm italic"
+              class="text-secondary-foreground flex flex-wrap items-center gap-x-4 gap-y-1 text-sm italic"
             >
               <span class="flex items-center gap-1.5" title="Published">
                 <IconCalendar
