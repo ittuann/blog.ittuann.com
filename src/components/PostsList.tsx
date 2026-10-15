@@ -58,7 +58,7 @@ export default function PostsList({ posts, heroImages }: Props) {
   );
 
   return (
-    <section className="mx-auto max-w-280 px-6 py-12">
+    <section className="mx-auto max-w-280 px-4 py-8 sm:px-6 sm:py-12">
       {/* Tag Filter Bar */}
       {sortedTags.length > 0 && (
         <div className="mb-8 flex flex-wrap gap-2">
@@ -120,27 +120,27 @@ export default function PostsList({ posts, heroImages }: Props) {
         yearGroups.map(([year, yearPosts]) => (
           <div key={year} className="mb-4">
             <div className="mb-2 flex items-center py-3">
-              <span className="text-foreground/50 w-16 shrink-0 pr-1 text-right text-xl font-bold">
+              <span className="text-foreground/50 w-12 shrink-0 pr-1 text-right text-xl font-bold sm:w-16">
                 {year}
               </span>
-              <div className="flex w-6 shrink-0 items-center justify-center">
+              <div className="flex w-5 shrink-0 items-center justify-center sm:w-6">
                 <div className="border-primary/40 bg-background size-3 rounded-full border-2" />
               </div>
               <div className="bg-border/50 ml-1 h-px flex-1" />
             </div>
 
             <div className="relative">
-              <div className="bg-border/40 left-4.75rem absolute top-0 bottom-6 w-px" />
+              <div className="bg-border/40 absolute top-0 bottom-6 left-14.5 w-px sm:left-19" />
               {yearPosts.map((post) => {
                 const d = new Date(post.data.pubDate);
                 const dateStr = `${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
                 return (
                   <div key={post.id} className="mb-5 flex items-center">
-                    <span className="text-muted-foreground/80 w-16 shrink-0 pr-2 text-right text-sm tabular-nums">
+                    <span className="text-muted-foreground/80 w-12 shrink-0 pr-1.5 text-right text-xs tabular-nums sm:w-16 sm:pr-2 sm:text-sm">
                       {dateStr}
                     </span>
-                    <div className="z-10 flex w-6 shrink-0 items-center justify-center">
+                    <div className="z-10 flex w-5 shrink-0 items-center justify-center sm:w-6">
                       {post.data.pinned !== undefined ? (
                         <IconSparkleHighlight
                           size={16}
@@ -153,9 +153,9 @@ export default function PostsList({ posts, heroImages }: Props) {
                     </div>
                     <a
                       href={`/posts/${post.id}/`}
-                      className="group hover:border-border/30 hover:bg-muted/40 -mr-2.5 ml-2 flex flex-1 items-center gap-3 rounded-2xl border border-transparent p-2.5 transition-all"
+                      className="group hover:border-border/30 hover:bg-muted/40 -mr-2.5 ml-1 flex min-w-0 flex-1 items-center gap-2.5 rounded-2xl border border-transparent p-2 transition-all sm:ml-2 sm:gap-3 sm:p-2.5"
                     >
-                      <div className="w-4.5rem aspect-4/3 shrink-0 overflow-hidden rounded-xl">
+                      <div className="aspect-4/3 w-16 shrink-0 overflow-hidden rounded-xl sm:w-18">
                         <img
                           src={heroImages[post.id]}
                           alt=""
