@@ -16,42 +16,22 @@ Scoop 本身和 Scoop 安装过程参考的配置文件都是开源的，要安�
 
 安装参考官网就可以。
 
-安装时可能会出现特色的网络问题，给 PowerShelll 挂上代理即可。但是 PowerShelll 原生并不支持 socks5 代理。
-
-### 可选：将 SOCKS5 代理转换为 HTTP 代理
-
-需要用到额外的第三方软件 **Privoxy** https://www.privoxy.org/
-
-Privoxy 是一个跨平台的非缓存的 Web 代理软件，它可以用来修改 Web 页面和 HTTP 头部、控制访问等。这里我们只需要用到 HTTP 代理转发和 SOCKS 代理转发，把收到的请求转给另一个代理。
-
-安装完成后，修改 C:\Program Files (x86)\Privoxy\config.txt 配置文件。在文件的最后追加
-
-```
-forward-socks5 / 127.0.0.1:3389 .
-```
-
-注意这一行里面有`/`和`.`不要忘记输入了
-
-在 Privoxy 默认的配置文件中已经设置了 `listen-address  127.0.0.1:8118` 表示监听的端口为本地 8118 端口。
-
-配置完成后重启 Privoxy 即可。然后本地 8118 端口即为 HTTP 代理。
-
-另外，如果用 Clash 的情况是不需要额外把 SOCKS5 代理转换为 HTTP 代理的。
-
-然后继续配置代理：
+安装时可能会出现特色的网络问题，给 PowerShelll 挂上代理即可。
 
 - 配置临时环境变量：
 
 ```shell
 $env:HTTP_PROXY="http://127.0.0.1:7890"
 $env:HTTPS_PROXY="http://127.0.0.1:7890"
+$env:ALL_PROXY="socks5://127.0.0.1:7890"
+$env:NO_PROXY = "localhost,127.0.0.1,::1,0.0.0.0,192.168.0.0/16"
 ```
 
 这组命令将`HTTP_PROXY`和`HTTPS_PROXY`环境变量设置为指定的代理服务器。
 
 这种方法仅对当前 PowerShell 会话中运行的命令生效，不影响其他应用程序或 Windows 系统级别的代理设置。这些设置在 PowerShell 会话结束后将不再有效。
 
-（如果使用 cmd 的话则对应：
+如果使用 cmd 的话则对应：
 
 ```shell
 set http_proxy=http://127.0.0.1:7890
@@ -137,7 +117,13 @@ Winget 是微软的 Windows 平台软件包管理器。现在应该是 Win11 都
 
 注意，Winget 第一次使用时会要求上传用户所在地的国家信息。
 
-## 配置 winget
+导出安装的软件：
+
+```shell
+winget export -o apps.json
+```
+
+- 配置 winget:
 
 - 更改 winget 显示的进度条视觉效果
 
@@ -173,7 +159,7 @@ Winget 配置代理同样可以使用上面提到的[环境变量](#安装时的
 更多的参数，在 GitHub 文档有描述
 WinGet CLI Settings https://github.com/microsoft/winget-cli/blob/master/doc/Settings.md
 
-# WingetUI
+## WingetUI
 
 <https://github.com/marticliment/WingetUI>
 

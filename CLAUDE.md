@@ -22,9 +22,10 @@ This project was created by [@ittuann](https://github.com/ittuann) and released 
 
 The UI/UX design philosophy of this website emphasizes creativity and uniqueness.
 
-The index landing page features motion-driven animations.
+The website features smooth motion-driven animations throughout.
+Interaction design feels tactile and responsive, with motion design that provide attractive effects.
 
-Movement is smooth. Every interaction feels tactile and responsive, with micro-animations that provide satisfying feedback.
+Show off your design capabilities to the fullest.
 
 Always aim to:
 - Ensure layouts are responsive and usable across devices.
@@ -53,7 +54,7 @@ pnpm format       # Run Prettier formatting
 
 Use **Tailwind CSS 4**.
 
-Only use `shadcn/ui` CSS variables in `src/styles/global.css`. Match the nearest ***shadcn primitive**, do not add external or custom color palettes.
+**Only use `shadcn/ui` CSS variables** in `src/styles/global.css`. Match the nearest ***shadcn primitive**, do not add external or custom color palettes.
 Always use predefined color variables (e.g., primary, primary-foreground, etc.) and utility classes (e.g., radius-xl, text-lg, shadow-md, etc.), to maintain UI consistency.
 Never hardcoded hex value colors or absolute pixel values.
 
