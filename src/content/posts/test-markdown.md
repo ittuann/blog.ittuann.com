@@ -8,11 +8,11 @@ category: ["Tech"]
 heroImage: "../../assets/blog-placeholder-1.jpg"
 ---
 
-Here is a sample of some basic Markdown syntax that can be used when writing Markdown content in Astro.
+Here are some examples of basic Markdown syntax on my website.
 
 ## Headings
 
-The following HTML `<h1>`—`<h6>` elements represent six levels of section headings. `<h1>` is the highest section level while `<h6>` is the lowest.
+You can use up to up to 6 levels by writing # at the start of a line
 
 # H1
 
@@ -28,37 +28,44 @@ The following HTML `<h1>`—`<h6>` elements represent six levels of section head
 
 ## Paragraph
 
-Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.
+We the People of the United States, in Order to form a more perfect Union, establish Justice, insure domestic Tranquility, provide for the common defence, promote the general Welfare, and secure the Blessings of Liberty to ourselves and our Posterity, do ordain and establish this Constitution for the United States of America.
 
-Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.
+Congress shall make no law respecting an establishment of religion, or prohibiting the free exercise thereof; or abridging the freedom of speech, or of the press; or the right of the people peaceably to assemble, and to petition the Government for a redress of grievances.
 
 ## Images
 
 ![blog placeholder](../../assets/blog-placeholder-2.jpg)
 
+## Formatting
+
+You can use **double asterisks** or __underscores__ to make bold text.
+
+You can use *single asterisks* or _underscores_ to make italic text.
+
+You can use ***triple asterisks*** or ___underscores___ to combine bold & italic.
+
+You can use ~~double tildes~~ to make strikethrough text.
+
 ## Blockquotes
 
-The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a `footer` or `cite` element, and optionally with in-line changes such as annotations and abbreviations.
+> A quoted paragraph.
+>> A quoted paragraph inside a quotation
 
-### Blockquote without attribution
-
-> Tiam, ad mint andaepu dandae nostion secatur sequo quae.
+> A quoted paragraph.
+>
 > **Note** that you can use _Markdown syntax_ within a blockquote.
 
-### Blockquote with attribution
+- Blockquote with attribution
 
-> Don't communicate by sharing memory, share memory by communicating.<br>
-> — <cite>Rob Pike[^1]</cite>
+> There is nothing either good or bad, but thinking makes it so. — William Shakespeare[^1]
 
-[^1]: The above quote is excerpted from Rob Pike's [talk](https://www.youtube.com/watch?v=PAAkCSZUG1c) during Gopherfest, November 18, 2015.
+[^1]: The linked footnote appears at the end of the document.
 
 ## Tables
 
-### Syntax
-
-| Italics   | Bold     | Code   |
-| --------- | -------- | ------ |
-| _italics_ | **bold** | `code` |
+| Header    | Column 1  | Column 2 |
+| --------- | --------- | -------- |
+| Row 1     | _Italics_ | **Bold** |
 
 ## Code Blocks
 
@@ -75,41 +82,44 @@ The blockquote element represents content that is quoted from another source, op
 </html>
 ```
 
-## List Types
+## Lists
 
-### Ordered List
+### Ordered Lists
 
 1. First item
 2. Second item
 3. Third item
 
-### Unordered List
+### Unordered Lists
 
-- List item
+Create a bulleted list by using an asterisk (`*`), hyphen (`-`), or plus sign (`+`), followed by a space.
+
+* List item
 - Another item
-- And another item
++ And another item
 
-### Nested list
+### Nested lists
 
-- Fruit
-  - Apple
-  - Orange
-  - Banana
-- Dairy
-  - Milk
-  - Cheese
+Nested list items are indented with 4 spaces.
 
-## Other Elements — abbr, sub, sup, kbd, mark
+* First level
+    * Second level
+
+1. Dairy
+    1. Apple
+    2. Milk
+
+## Other Elements — mark, abbr, kbd, sub, sup
+
+<mark>Highlight</mark> text
 
 <abbr title="Graphics Interchange Format">GIF</abbr> is a bitmap image format.
+
+Press <kbd>CTRL</kbd> + <kbd>F</kbd> to search for text.
 
 H<sub>2</sub>O
 
 X<sup>n</sup> + Y<sup>n</sup> = Z<sup>n</sup>
-
-Press <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>Delete</kbd> to end the session.
-
-Most <mark>salamanders</mark> are nocturnal, and hunt for insects, worms, and other small creatures.
 
 ## Others
 
