@@ -109,7 +109,7 @@ export function FeaturedPostsInteractive({ posts, heroImageSrcs }: Props) {
                       className="text-primary hover:text-primary/80 mt-auto inline-flex items-center gap-1 text-sm font-semibold"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      Read article
+                      Read
                       <motion.span
                         variants={{ hovered: { x: 5 } }}
                         transition={{

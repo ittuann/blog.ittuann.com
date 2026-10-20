@@ -33,7 +33,7 @@ export default defineConfig({
     }),
     shikiConfig: {
       themes: {
-        light: "ayu-light",
+        light: "github-light",
         dark: "github-dark",
       },
     },
