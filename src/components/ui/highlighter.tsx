@@ -13,7 +13,7 @@ type AnnotationAction =
   | "crossed-off"
   | "bracket"
 
-interface HighlighterProps {
+export interface HighlighterProps {
   children: React.ReactNode
   action?: AnnotationAction
   color?: string
@@ -23,6 +23,8 @@ interface HighlighterProps {
   padding?: number
   multiline?: boolean
   isView?: boolean
+  // Externally controlled switch, e.g. to show the annotation only on hover
+  active?: boolean
 }
 
 export function Highlighter({
@@ -35,6 +37,7 @@ export function Highlighter({
   padding = 2,
   multiline = true,
   isView = false,
+  active = true,
 }: HighlighterProps) {
   const elementRef = useRef<HTMLSpanElement>(null)
 
@@ -44,7 +47,7 @@ export function Highlighter({
   })
 
   // If isView is false, always show. If isView is true, wait for inView
-  const shouldShow = !isView || isInView
+  const shouldShow = active && (!isView || isInView)
 
   useLayoutEffect(() => {
     const element = elementRef.current

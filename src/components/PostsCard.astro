@@ -36,14 +36,17 @@ const { posts } = Astro.props;
                 alt="Post hero image"
                 width={560}
                 height={420}
-                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
             </a>
 
             <div class="flex w-full flex-grow flex-col">
               <a href={`/posts/${post.id}/`} class="block">
                 <h3 class="text-foreground group-hover:text-primary mb-2.5 text-lg font-semibold transition-colors">
-                  {post.data.title}
+                  {/* 文字下划线 */}
+                  <span class="bg-[linear-gradient(currentColor,currentColor)] bg-size-[0%_0.1rem] bg-bottom-left bg-no-repeat pb-0.5 transition-[background-size,color] duration-400 ease-out group-hover:bg-size-[100%_0.125rem] motion-reduce:transition-none">
+                    {post.data.title}
+                  </span>
                 </h3>
                 <p class="text-muted-foreground mb-4 line-clamp-2 text-lg">
                   {post.data.description}

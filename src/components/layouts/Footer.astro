@@ -3,6 +3,7 @@ import { IconBrandGithub, IconRss, IconMail } from "@tabler/icons-react";
 import { SparklesText } from "@/components/ui/sparkles-text.tsx";
 import avatarImg from "@/assets/avatar-circle.webp";
 import FooterWaves from "./FooterWaves.tsx";
+import HighlightLink from "@/components/HighlightLink.tsx";
 
 const today = new Date();
 
@@ -78,12 +79,9 @@ const socialLinks = [
               </span>
               {
                 exploreLinks.map(({ href, label }) => (
-                  <a
-                    href={href}
-                    class="text-muted-foreground hover:text-primary text-sm transition-colors"
-                  >
+                  <HighlightLink client:idle href={href} className="text-sm">
                     {label}
-                  </a>
+                  </HighlightLink>
                 ))
               }
             </nav>
@@ -96,13 +94,14 @@ const socialLinks = [
               </span>
               {
                 resourceLinks.map(({ href, label }) => (
-                  <a
+                  <HighlightLink
+                    client:idle
                     href={href}
-                    target={href.startsWith("/") ? undefined : "_blank"}
-                    class="text-muted-foreground hover:text-primary text-sm transition-colors"
+                    external={!href.startsWith("/")}
+                    className="text-sm"
                   >
                     {label}
-                  </a>
+                  </HighlightLink>
                 ))
               }
             </nav>
@@ -115,13 +114,14 @@ const socialLinks = [
         >
           <p>
             Created with <span class="text-primary">♥</span> by {" "}
-            <a
+            <HighlightLink
+              client:idle
               href="https://github.com/ittuann"
-              target="_blank"
-              class="hover:text-foreground transition-colors"
+              external
+              className="hover:text-foreground focus-visible:text-foreground"
             >
               air wish
-            </a>
+            </HighlightLink>
           </p>
           <p>&copy;2021-{today.getFullYear()} air wish</p>
         </div>
