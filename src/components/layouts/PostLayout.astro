@@ -38,7 +38,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
             {/* category, tags */}
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
               <div
-                class="text-secondary-foreground flex items-center gap-2 text-sm tracking-tight"
+                class="text-secondary-foreground flex items-center gap-2 tracking-tight"
                 title="Category"
               >
                 <IconFolder
@@ -46,7 +46,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
                   stroke={2}
                   aria-label="Category"
                 />
-                <span>{category.join(" · ")}</span>
+                <span class="text-sm">{category.join(" · ")}</span>
               </div>
               <div class="flex flex-wrap items-center gap-2">
                 <IconTags
@@ -58,7 +58,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
                   tags.map((tag) => (
                     <a
                       href={`/posts?tag=${encodeURIComponent(tag)}`}
-                      class="text-primary hover:bg-secondary/80 rounded-full px-2 py-1 font-semibold no-underline transition-colors"
+                      class="text-primary hover:bg-secondary/80 rounded-full px-2 py-1 text-sm font-semibold no-underline transition-colors"
                     >
                       {tag}
                     </a>
@@ -69,7 +69,7 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
 
             <span
               aria-hidden="true"
-              class="text-secondary-foreground/40 hidden text-xl leading-none font-light select-none sm:inline"
+              class="text-secondary-foreground/40 hidden text-lg leading-none font-light select-none sm:inline"
             >
               /
             </span>
@@ -120,9 +120,8 @@ const { title, description, pubDate, updatedDate, heroImage, tags, category } =
 
       {/* content */}
       <div
-        class="prose dark:prose-invert prose-a:text-primary prose-a:break-words prose-blockquote:border-l-primary max-w-none py-4"
+        class="prose dark:prose-invert prose-a:text-primary prose-a:break-words prose-blockquote:border-l-primary prose-p:text-lg max-w-none py-4"
       >
-        <hr class="border-border mb-4" />
         <slot />
       </div>
     </article>

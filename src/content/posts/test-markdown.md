@@ -69,17 +69,9 @@ You can use ~~double tildes~~ to make strikethrough text.
 
 ## Code Blocks
 
-```html
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Example HTML5 Document</title>
-  </head>
-  <body>
-    <p>Test</p>
-  </body>
-</html>
+```python
+def hello_world():
+    print("Hello, world!")
 ```
 
 ## Lists
