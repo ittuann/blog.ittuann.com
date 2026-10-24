@@ -80,7 +80,7 @@ The `@theme` directive in `global.css`. No `tailwind.config.*` file.
 
 Dark mode is toggled via the `.dark` class on the root element, stored in `localStorage` under the `theme` key (you can refer to see `ThemeToggle.tsx` and the inline script in `BaseHead.astro`).
 
-## Component Conventions
+## Coding & Component Conventions
 
 - React components use `.tsx`. Astro components use `.astro`. React components are hydrated via `client:idle` or `client:visible`.
 
