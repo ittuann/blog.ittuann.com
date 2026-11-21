@@ -129,7 +129,7 @@ void AccLowpassIIR2Filter_E(void)
 
 - 频率设定（Frequency Specifications）用于设置采样频率以及截止频率，这里填入 500 以及 50，即采样率为 500Hz，50Hz 以上的频率将被滤除掉。
 
-- 滤波器阶数（Fiter Order）选择指定滤波器阶数为二阶。
+- 滤波器阶数（Filter Order）选择指定滤波器阶数为二阶。
 - 参数设置好后点击设计滤波器（Design filter）按钮，将按要求设计滤波器。
 - 默认生成的 IIR 滤波器类型是直接Ⅱ型，每个 Section 是一个二阶滤波器（Direct-Form II, Second-Order Sections）。
 - 在工具栏上点击右数第五个滤波器系数（Filter Coefficients）图标，或菜单栏上选择分析（Analysis）→滤波器系数（Filter Coefficients），即可查看生成的滤波器系数。

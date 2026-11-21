@@ -27,7 +27,7 @@ FPU：Float Point Unit。全称是浮点计算单元，用于浮点计算的协�
 - 在 IDE 中设置开启 FPU。但最终 FPU 启用与否也是根据上面两个 define 的数值来判断。
 
   - keil：Options for Target - Target - Floating Point Hardware 设置为 Single Precision 或 USEFPU
-  - CubeIDE：Properties - C/C++ Bulid - Settings - MCU Settings。Floating-point unit 设置为 FPv4-SP-D16；Floating-point ABI 设置为 Hardware implementation (-mfloat-abi=hard)
+  - CubeIDE：Properties - C/C++ Build - Settings - MCU Settings。Floating-point unit 设置为 FPv4-SP-D16；Floating-point ABI 设置为 Hardware implementation (-mfloat-abi=hard)
 
 - arm_math.h 也需要根据`__FPU_USED`的数值来判断是否启用。但是因为上面两个定义的文件和导入的 DSP 库文件可能没有联系，所以为了避免出问题可以在编译器的预编译符号设置`__FPU_USED=1`和`__FPU_PRESENT=1`。编译时会报重定义的错需要把原本的定义注释掉
 

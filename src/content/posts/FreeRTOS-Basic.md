@@ -257,7 +257,7 @@ void TestTask(void const * argument)
         } else {
 
         }
-        // 也可以换成用 whlie 的死循环写法
+        // 也可以换成用 while 的死循环写法
         while (xSemaphoreTake(xSemaphore, (TickType_t)(10 / portTICK_RATE_MS)) != pdPASS)
         {
         }

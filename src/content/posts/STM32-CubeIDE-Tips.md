@@ -81,7 +81,7 @@ assert_param 函数用来检查用户输入参数是否正确。HAL 库中的函
 # 字体相关
 
 - 显示简体中文：右键项目选择`Prorerties` ，然后在弹出的窗口选择`Resource`，修改`Text file encoding`为`Other：GBK`。GBK 不在下拉列表的选项中的话直接打字上去也是可以的。
-- 更换字体：`Window > Preferences > General > Apperance > Colors and Fonts`选择`Bsaic > Text Fonts`再点击右侧 Edit...即可更换。我在使用的字体是更纱黑体 Sarasa Mono HC 12
+- 更换字体：`Window > Preferences > General > Appearance > Colors and Fonts`选择`Bsaic > Text Fonts`再点击右侧 Edit...即可更换。我在使用的字体是更纱黑体 Sarasa Mono HC 12
 - 修复中文字体大小异常：再上面更换字体的窗口，将脚注选择为“中欧字符”即可
 
 # 自动补全

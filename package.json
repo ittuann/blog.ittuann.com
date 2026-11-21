@@ -27,7 +27,8 @@
     "astro": "astro",
     "format": "prettier --write '**/*.{astro,js,jsx,mjs,ts,tsx,mts,css,scss,html,json,yaml,yml,toml,md,mdx}'",
     "format:check": "prettier --check '**/*.{astro,js,jsx,mjs,ts,tsx,mts,css,scss,html,json,yaml,yml,toml,md,mdx}'",
-    "typo": "prettier --write '**/*.{md,mdx}' && pnpm dlx case-police --fix"
+    "typo": "prettier --write '**/*.{md,mdx}' && pnpm dlx case-police --fix",
+    "spell": "uvx typos@latest -w"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",

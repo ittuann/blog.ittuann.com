@@ -1,0 +1,12 @@
+[files]
+extend-exclude = ["src/assets/fonts"]
+
+[default.extend-identifiers]
+CAN_TSR_TME0 = "CAN_TSR_TME0"
+CAN_TSR_TME1 = "CAN_TSR_TME1"
+CAN_TSR_TME2 = "CAN_TSR_TME2"
+LpfIIR2nd_t = "LpfIIR2nd_t"
+LowPassFilterIIR2nd = "LowPassFilterIIR2nd"
+
+[default.extend-words]
+IST = "IST"

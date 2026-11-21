@@ -240,7 +240,7 @@ pid->Output = floatLimitMinMax(pid->Output, -pid->out_Max, pid->out_Max);
 ```c
 if (pid->errABS < sErr) {
     // 小偏差 较小误差，调小比例
-    pid->outPut = offineK * pid->outPut;
+    pid->outPut = offlineK * pid->outPut;
 } else if (pid->errABS > lErr) {
     // 大偏差
     // 串联 BangBang-PID
